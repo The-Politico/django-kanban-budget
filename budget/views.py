@@ -2,17 +2,14 @@ from django.urls import reverse
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from django_filters import rest_framework as filters
-from rest_framework import viewsets
-
-from .authentication import InteractivesBotAuthentication, get_bot_token
+from .authentication import get_bot_token
 from .forms import FullProjectForm, ShortProjectForm
 from .mixins import LoginRequiredMixin, StaffRequiredMixin
-from .models import Board, Column, Project, Tag, Type
-from .permissions import InteractivesBotPermission
-from .serializers import (BoardSerializer, ColumnSerializer, ProjectSerializer,
-                          TagSerializer, TypeSerializer)
+from .models import Board, Project
 
 
 class SecureAuthorCreateView(LoginRequiredMixin, CreateView):
@@ -88,66 +85,9 @@ class ProjectDelete(StaffRequiredMixin, DeleteView):
             args=[self.object.status.board.slug])
 
 
-############
-# ViewSets #
-############
+class GithubWebhook(APIView):
+    def post(self, request, *args, **kwargs):
+        payload = request.data
+        print(payload)
 
-
-class BotAuthedViewSet(viewsets.ModelViewSet):
-    """
-    ViewSet class that restricts views to our bots token.
-
-    Also disables the default pagination.
-    """
-
-    authentication_classes = (InteractivesBotAuthentication,)
-    permission_classes = (InteractivesBotPermission,)
-    paginator = None
-
-
-class StatusFilter(filters.FilterSet):
-    status = filters.CharFilter(name='status__slug')
-
-    class Meta:
-        model = Project
-        fields = ['status']
-
-
-class BoardFilter(filters.FilterSet):
-    board = filters.CharFilter(name='board__slug')
-
-    class Meta:
-        model = Column
-        fields = ['board']
-
-
-class ProjectViewSet(BotAuthedViewSet):
-    queryset = Project.objects.filter(archive=False)
-    serializer_class = ProjectSerializer
-    lookup_field = 'slug'
-    filter_class = StatusFilter
-
-
-class ColumnViewSet(BotAuthedViewSet):
-    queryset = Column.objects.all()
-    serializer_class = ColumnSerializer
-    lookup_field = 'slug'
-    filter_class = BoardFilter
-
-
-class BoardViewSet(BotAuthedViewSet):
-    queryset = Board.objects.all()
-    serializer_class = BoardSerializer
-    lookup_field = 'slug'
-
-
-class TagViewSet(BotAuthedViewSet):
-    queryset = Tag.objects.all()
-    serializer_class = TagSerializer
-    lookup_field = 'slug'
-
-
-class TypeViewSet(BotAuthedViewSet):
-    queryset = Type.objects.all()
-    serializer_class = TypeSerializer
-    lookup_field = 'slug'
+        return Response(status=status.HTTP_200_OK)
