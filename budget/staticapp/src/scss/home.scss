@@ -1,0 +1,100 @@
+@import 'colors';
+@import 'fonts';
+
+.clearfix {
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+
+body{
+  font-family: $proxima;
+
+  h1, h2, h3, h4{
+    text-align: left;
+    font-weight: bold;
+    font-family:$proxima;
+    text-transform: none;
+  }
+}
+
+sup{
+  font-weight: normal;
+  font-size: 10px;
+  color: red;
+  top: -1em;
+  margin-left: 2px;
+  text-decoration: none;
+  display:inline-block;
+}
+
+section.main-boards{
+  .boards{
+    max-width: 600px;
+
+    .board{
+      max-width:300px;
+      float:left;
+      padding: 10px 40px 10px 0;
+      a{
+        color: #333;
+        font-size: 24px;
+        font-weight: bold;
+        cursor:pointer;
+        i{
+          margin-right: 5px;
+        }
+      }
+    }
+
+  }
+}
+
+section.links{
+  margin-top: 30px;
+  button{
+    border-radius: 50px;
+    margin-right: 10px;
+    padding: 5px 22px;
+    background-color: $budget-color;
+    border: none;
+    color:white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    &:hover{
+      box-shadow: 2px 7px 14px rgba(0,0,0,0.22), 2px 5px 5px rgba(0,0,0,0.18);
+    }
+  }
+}
+
+section.project-boards{
+  margin-top: 80px;
+  h3{
+    color: #999;
+    margin-bottom: 12px;
+    font-size: 22px;
+  }
+  .boards{
+    width:100%;
+    white-space: nowrap;
+    overflow-x: scroll;
+    .board{
+      border-left: 2px solid #ccc;
+      padding: 0 10px;
+      max-width: 200px;
+      white-space: normal;
+      h4{
+        margin-bottom: 5px;
+        a{
+          color: #333;
+        }
+      }
+      p {
+        font-size: 14px;
+        margin: 0;
+      }
+    }
+  }
+}

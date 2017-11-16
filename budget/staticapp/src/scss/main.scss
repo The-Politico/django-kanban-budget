@@ -1,0 +1,16 @@
+@import 'mixins';
+@import 'colors';
+@import 'fonts';
+@import 'forms';
+
+body{
+  font-family: $proxima;
+
+  h1, h2, h3, h4{
+    letter-spacing: 0;
+    text-align: left;
+    font-weight: bold;
+    font-family:$proxima;
+    text-transform: none;
+  }
+}

@@ -1,0 +1,24 @@
+{%extends 'base.html'%}
+{%load staticfiles%}
+
+{%block head%}
+<link rel="stylesheet" href="{%static 'budget/css/main.css'%}">
+{%endblock%}
+
+{%block breadcrumb%}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{%url 'home'%}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{% url 'budget-boards'%}">Budget</a></li>
+    <li class="breadcrumb-item active"><a href="{% url 'budget-projects-edit' object.slug%}">{{object.name|truncatechars:25}}</a></li>
+    <li class="breadcrumb-item active">Delete</li>
+</ol>
+{%endblock%}
+
+{%block content%}
+<form action="" method="post">
+    {% csrf_token %}
+    <h1>Delete project</h1>
+    <h4>Are you sure you want to delete "{{ object }}"?</h4>
+    <button type="submit" class="btn btn-lg" value="Submit">Yes</button>
+</form>
+{%endblock%}

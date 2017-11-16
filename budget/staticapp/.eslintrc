@@ -1,0 +1,19 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "no-unsafe-finally": 0,
+    "no-useless-computed-key": 0,
+    "react/require-render-return": 0,
+    "react/jsx-first-prop-new-line": 0,
+    "no-console": 0,
+    "react/prefer-es6-class": 0,
+    "no-eval": 0,
+    "react/jsx-no-bind": 0,
+    "react/sort-comp": 0,
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  }
+}

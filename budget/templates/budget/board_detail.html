@@ -1,0 +1,42 @@
+{%extends 'base.html'%}
+{%load staticfiles%}
+{%load markdown_tags%}
+
+{%block dependency_styles%}
+{%endblock%}
+
+{%block head%}
+<link rel="stylesheet" href="{%static 'budget/css/main.css'%}">
+<link rel="stylesheet" href="{%static 'budget/css/board.css'%}">
+{%endblock%}
+
+{%block foot%}
+<input type="hidden" name="board" value="{{board.slug}}" />
+<input type="hidden" name="token" value="{{token}}" />
+<script type="text/javascript" src="{%static 'budget/js/main-board-app.bundle.js'%}"></script>
+{%endblock%}
+
+{%block breadcrumb%}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{%url 'home'%}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{%url 'budget-boards'%}">Budget</a></li>
+    <li class="breadcrumb-item active"><b>{{board.name}}</b></li>
+</ol>
+{%endblock%}
+
+{%block content%}
+<div id="board"></div>
+{%endblock%}
+
+{%block footer%}
+{% if request.user.is_superuser %}
+  <a href="{%url 'budget-projects-create'%}">
+    <button class="nav-button"><i class="fa fa-plus"></i> Create</button>
+  </a>
+{% else %}
+  <a href="{%url 'budget-projects-pitch'%}">
+    <button class="nav-button"><i class="fa fa-plus"></i> Pitch</button>
+  </a>
+{% endif %}
+{{block.super}}
+{%endblock%}

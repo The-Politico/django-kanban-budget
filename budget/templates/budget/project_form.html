@@ -1,0 +1,189 @@
+{%extends 'base.html'%}
+{%load staticfiles%}
+
+{%block dependency_styles%}
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" />
+<link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+{%endblock%}
+
+{%block head%}
+<link rel="stylesheet" href="{%static 'budget/css/main.css'%}">
+{%endblock%}
+
+{%block foot%}
+<script type="text/javascript" src="{%static 'budget/js/main-project.bundle.js'%}"></script>
+{%endblock%}
+
+{%block breadcrumb%}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{%url 'home'%}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{% url 'budget-boards'%}">Budget</a></li>
+    {%if object%}
+    <li class="breadcrumb-item"><a href="{% url 'budget-boards-detail' object.status.board.slug%}">{{object.status.board.name}}</a></li>
+    <li class="breadcrumb-item active">{{object.name}}</li>
+    {%else%}
+    <li class="breadcrumb-item active">Create/Edit Project</li>
+    {%endif%}
+
+</ol>
+{%endblock%}
+
+{%block content%}
+<section class="header">
+  <small>{{object.name}}</small>
+  <h1>Create/Edit</h1>
+</section>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-xs-8">
+            <div class="form-group">
+                <label class="required extra" for="{{ form.name.id_for_label }}">{{form.name.label}} <small>required</small></label>
+                {{ form.name }}
+                <div class="form-control-feedback errors">{{ form.name.errors }}</div>
+                <small class="form-text text-muted">e.g., "Map of 2016 Iowa county returns"</small>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="form-group">
+                <label for="{{ form.run_date.id_for_label }}">{{form.run_date.label}}</label>
+                {{ form.run_date }}
+                <div class="form-control-feedback errors">{{ form.run_date.errors }}</div>
+                <small class="form-text text-muted"></small>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group description">
+                <label class="required" for="{{ form.description.id_for_label }}">{{form.description.label}} <small>required</small></label>
+                {{ form.description }}
+                <div class="form-control-feedback errors">{{ form.description.errors }}</div>
+                <small class="form-text text-muted">250 characters</small>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <h5>Meta</h5>
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="form-group">
+                <label class="required" for="{{ form.status.id_for_label }}">Status</label>
+                {{ form.status }}
+                <div class="form-control-feedback errors">{{ form.status.errors }}</div>
+                <small class="form-text text-muted">{{form.status.help_text}}</small>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="form-group">
+                <label class="required" for="{{ form.type.id_for_label }}">Type</label>
+                {{ form.type }}
+                <div class="form-control-feedback errors">{{ form.type.errors }}</div>
+                <small class="form-text text-muted">{{form.type.help_text}}</small>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="form-group">
+                <label for="{{ form.tags.id_for_label }}">Tags</label>
+                {{ form.tags }}
+                <div class="form-control-feedback errors">{{ form.tags.errors }}</div>
+                <small class="form-text text-muted">{{form.tags.help_text}}</small>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <h5>People</h5>
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="form-group">
+                <label for="{{ form.reporters.id_for_label }}">{{form.reporters.label}}</label>
+                {{ form.reporters }}
+                <div class="form-control-feedback errors">{{ form.reporters.errors }}</div>
+                <small class="form-text text-muted">{{ form.editors.help_text }}</small>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="form-group">
+                <label for="{{ form.editors.id_for_label }}">{{form.editors.label}}</label>
+                {{ form.editors }}
+                <div class="form-control-feedback errors">{{ form.editors.errors }}</div>
+                <small class="form-text text-muted">{{ form.editors.help_text }}</small>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="form-group">
+                <label for="{{ form.developers.id_for_label }}">{{form.developers.label}}</label>
+                {{ form.developers }}
+                <div class="form-control-feedback errors">{{ form.developers.errors }}</div>
+                <small class="form-text text-muted">{{ form.developers.help_text }}</small>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <h5>URLs</h5>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label for="{{ form.publish_url.id_for_label }}">Publish</label>
+                {{ form.publish_url }}
+                <div class="form-control-feedback errors">{{ form.publish_url.errors }}</div>
+                <small class="form-text text-muted">{{form.publish_url.help_text}}</small>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label for="{{ form.preview_url.id_for_label }}">Preview</label>
+                {{ form.preview_url }}
+                <div class="form-control-feedback errors">{{ form.preview_url.errors }}</div>
+                <small class="form-text text-muted">{{form.preview_url.help_text}}</small>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <h5>Resources</h5>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label for="{{ form.github.id_for_label }}">{{form.github.label}}</label>
+                {{ form.github }}
+                <div class="form-control-feedback errors">{{ form.github.errors }}</div>
+                <small class="form-text text-muted">{{form.github.help_text}}</small>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label for="{{ form.gdoc.id_for_label }}">Google Doc</label>
+                {{ form.gdoc }}
+                <div class="form-control-feedback errors">{{ form.gdoc.errors }}</div>
+                <small class="form-text text-muted">{{form.gdoc.help_text}}</small>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group notes">
+                <label for="{{ form.notes.id_for_label }}">Notes</label>
+                {{ form.notes }}
+                <div class="form-control-feedback errors">{{ form.notes.errors }}</div>
+                <small class="form-text text-muted">{{form.notes.help_text}}</small>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group">
+              {{ form.archive }}
+              <label for="{{ form.archive.id_for_label }}">Archive</label>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-lg" value="Submit">Submit</button>
+    {% if request.user.is_superuser and object %}
+    <a style="float:right;" href="{%url 'budget-projects-delete' object.slug%}">
+        <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
+    </a>
+    {%endif%}
+</form>
+{%endblock%}
