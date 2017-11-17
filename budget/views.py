@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .authentication import get_bot_token
+from .celery import create_todo, delete_todo
 from .forms import FullProjectForm, ShortProjectForm
 from .mixins import LoginRequiredMixin, StaffRequiredMixin
 from .models import Board, Project
@@ -87,7 +88,19 @@ class ProjectDelete(StaffRequiredMixin, DeleteView):
 
 class GithubWebhook(APIView):
     def post(self, request, *args, **kwargs):
+        """
+        Respond to incoming github webhook for issue events.
+        """
         payload = request.data
-        print(payload)
+        action = payload.get('action')
+        repo = payload.get('repository')
+        repo_url = repo.get('html_url')
+        issue = payload.get('issue')
+        title = issue.get('title')
+        issue_url = issue.get('html_url')
+        if action == 'opened' or action == 'reopened':
+            create_todo.delay(repo_url, issue_url, title)
+        elif action == 'closed':
+            delete_todo.delay(issue_url)
 
         return Response(status=status.HTTP_200_OK)

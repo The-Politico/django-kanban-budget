@@ -28,5 +28,6 @@ setup(
         'djangorestframework',
         'django-filter',
         'django-uuslug',
+        'celery',
     ]
 )

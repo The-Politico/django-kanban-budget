@@ -121,3 +121,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+BUDGET_GITHUB_TOKEN = os.getenv('BUDGET_GITHUB_TOKEN')
+BUDGET_GITHUB_ORG = os.getenv('BUDGET_GITHUB_ORG')

@@ -1,5 +1,4 @@
-import os
-
+from django.conf import settings
 from github import Github as gh
 
 
@@ -10,29 +9,42 @@ class Repo(object):
     def create_issue(self, title):
         return self.GITHUB.create_issue(title=title)
 
-    def get_issue(self, title):
+    def get_issue_by_title(self, title):
         for issue in self.get_issues():
             if issue.title == title:
+                return issue
+        return None
+
+    def get_issue_by_url(self, url):
+        for issue in self.get_issues():
+            if issue.html_url == url:
                 return issue
         return None
 
     def get_issues(self):
         return self.GITHUB.get_issues()
 
+    def get_open_issues(self):
+        return [
+            issue for issue
+            in self.get_issues()
+            if issue.state == 'open'
+        ]
+
     def get_open_issues_count(self):
         return self.GITHUB.open_issues_count
 
-    def close_issue(self, title):
-        issue = self.get_issue(self.GITHUB, title)
+    def close_issue_by_title(self, title):
+        issue = self.get_issue_by_title(self.GITHUB, title)
         issue.edit(state='closed')
 
 
 class Github(object):
     def __init__(
         self,
-        token=os.getenv('BUDGET_GITHUB_TOKEN', None),
-        person=os.getenv('BUDGET_GITHUB_PERSON', None),
-        org=os.getenv('BUDGET_GITHUB_ORG', None)
+        token=getattr(settings, 'BUDGET_GITHUB_TOKEN', None),
+        person=getattr(settings, 'BUDGET_GITHUB_PERSON', None),
+        org=getattr(settings, 'BUDGET_GITHUB_ORG', None)
     ):
         if not token:
             return

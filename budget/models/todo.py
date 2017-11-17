@@ -1,9 +1,33 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
 from budget.models import Project
 
 
+class TodoManager(models.Manager):
+    def create_for_project(self, repo_url, issue_url, title):
+        try:
+            project = Project.objects.get(github=repo_url)
+        except ObjectDoesNotExist:
+            return None
+        todo = self.create(
+            project=project,
+            title=title,
+            github_url=issue_url
+        )
+        return todo
+
+    def delete_for_project(self, issue_url):
+        self.filter(github_url=issue_url).delete()
+
+
 class Todo(models.Model):
+    """Todos usually represent github issues
+    but they can also be made manually."""
     project = models.ForeignKey(Project, related_name='todos')
     title = models.CharField(max_length=250)
-    github_url = models.URLField(blank=True, null=True)
+    github_url = models.URLField(blank=True, null=True, unique=True)
+    objects = TodoManager()
+
+    def __str__(self):
+        return self.title
