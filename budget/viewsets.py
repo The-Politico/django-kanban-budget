@@ -2,10 +2,10 @@ from django_filters import rest_framework as filters
 from rest_framework import viewsets
 
 from .authentication import InteractivesBotAuthentication
-from .models import Board, Column, Project, Tag, Type
+from .models import Board, Column, Project, Tag, Todo, Type
 from .permissions import InteractivesBotPermission
 from .serializers import (BoardSerializer, ColumnSerializer, ProjectSerializer,
-                          TagSerializer, TypeSerializer)
+                          TagSerializer, TodoSerializer, TypeSerializer)
 
 
 class BotAuthedViewSet(viewsets.ModelViewSet):
@@ -66,3 +66,8 @@ class TypeViewSet(BotAuthedViewSet):
     queryset = Type.objects.all()
     serializer_class = TypeSerializer
     lookup_field = 'slug'
+
+
+class TodoViewset(BotAuthedViewSet):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer

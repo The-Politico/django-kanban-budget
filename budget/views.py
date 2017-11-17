@@ -1,4 +1,9 @@
+import hmac
+from hashlib import sha1
+
+from django.conf import settings
 from django.urls import reverse
+from django.utils.encoding import force_bytes
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -87,17 +92,45 @@ class ProjectDelete(StaffRequiredMixin, DeleteView):
 
 
 class GithubWebhook(APIView):
+    def verify_request(self, request):
+        """
+        Verify request is from Github using webhook secret.
+        """
+        SECRET = getattr(settings, 'BUDGET_GITHUB_WEBHOOK_SECRET', None)
+        if not SECRET:
+            return True
+        header_signature = request.META.get('HTTP_X_HUB_SIGNATURE')
+        if not header_signature:
+            return False
+        sha_name, signature = header_signature.split('=')
+        if sha_name != 'sha1':
+            return False
+        mac = hmac.new(
+            force_bytes(SECRET),
+            msg=force_bytes(request.body),
+            digestmod=sha1
+        )
+        if not hmac.compare_digest(
+            force_bytes(mac.hexdigest()),
+            force_bytes(signature)
+        ):
+            return False
+        return True
+
     def post(self, request, *args, **kwargs):
         """
         Respond to incoming github webhook for issue events.
         """
+
+        if not self.verify_request(request):
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
         payload = request.data
         action = payload.get('action')
-        repo = payload.get('repository')
-        repo_url = repo.get('html_url')
-        issue = payload.get('issue')
-        title = issue.get('title')
-        issue_url = issue.get('html_url')
+        repo_url = payload.get('repository').get('html_url')
+        title = payload.get('issue').get('title')
+        issue_url = payload.get('issue').get('html_url')
+
         if action == 'opened' or action == 'reopened':
             create_todo.delay(repo_url, issue_url, title)
         elif action == 'closed':

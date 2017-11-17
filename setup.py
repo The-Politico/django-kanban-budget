@@ -29,5 +29,6 @@ setup(
         'django-filter',
         'django-uuslug',
         'celery',
+        'markdown',
     ]
 )

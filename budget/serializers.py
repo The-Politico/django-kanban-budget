@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from .models import Board, Column, Project, Tag, Type
+from .models import Board, Column, Project, Tag, Todo, Type
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -9,6 +9,13 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'last_name')
+
+
+class TodoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Todo
+        fields = ('pk', 'title', 'github_url')
 
 
 class TagSerializer(serializers.HyperlinkedModelSerializer):
@@ -68,6 +75,7 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
     )
     type = TypeSerializer(read_only=True)
     edit_url = serializers.URLField(source='get_absolute_url')
+    todos = TodoSerializer(many=True, read_only=True)
 
     class Meta:
         model = Project
@@ -89,4 +97,5 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
             'type',
             'tags',
             'position',
+            'todos'
         )

@@ -10,10 +10,12 @@ class TodoManager(models.Manager):
             project = Project.objects.get(github=repo_url)
         except ObjectDoesNotExist:
             return None
-        todo = self.create(
+        todo, created = self.update_or_create(
             project=project,
-            title=title,
-            github_url=issue_url
+            github_url=issue_url,
+            defaults={
+                'title': title
+            }
         )
         return todo
 
@@ -26,7 +28,8 @@ class Todo(models.Model):
     but they can also be made manually."""
     project = models.ForeignKey(Project, related_name='todos')
     title = models.CharField(max_length=250)
-    github_url = models.URLField(blank=True, null=True, unique=True)
+    github_url = models.URLField(
+        blank=True, null=True, unique=True, editable=False)
     objects = TodoManager()
 
     def __str__(self):

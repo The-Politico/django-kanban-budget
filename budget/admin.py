@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .forms import TypeForm
-from .models import Board, Column, Project, Tag, Type
+from .models import Board, Column, Project, Tag, Todo, Type
 
 
 class TypeAdmin(admin.ModelAdmin):
@@ -51,6 +51,7 @@ class ProjectAdmin(admin.ModelAdmin):
 
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Tag)
+admin.site.register(Todo)
 admin.site.register(Type, TypeAdmin)
 admin.site.register(Column, ColumnAdmin)
 admin.site.register(Board, BoardAdmin)
