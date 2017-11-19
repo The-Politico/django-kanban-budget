@@ -12,3 +12,13 @@ export const openNote = () => ({
 export const closeNote = () => ({
   type: types.CLOSE_NOTE,
 });
+
+export const sendNotes = (slug, notes) => ({
+  type: types.SEND_NOTES,
+  slug,
+  notes,
+});
+
+export const sendNotesSuccess = () => ({
+  type: types.SEND_NOTES_SUCCESS,
+});

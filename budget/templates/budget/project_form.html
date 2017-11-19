@@ -16,7 +16,7 @@
 
 {%block breadcrumb%}
 <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{%url 'home'%}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
     <li class="breadcrumb-item"><a href="{% url 'budget-boards'%}">Budget</a></li>
     {%if object%}
     <li class="breadcrumb-item"><a href="{% url 'budget-boards-detail' object.status.board.slug%}">{{object.status.board.name}}</a></li>

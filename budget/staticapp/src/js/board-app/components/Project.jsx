@@ -6,6 +6,7 @@ import moment from 'moment';
 import _ from 'lodash';
 import { DragSource as dragSource, DropTarget as dropTarget } from 'react-dnd';
 import ItemTypes from '../constants/itemTypes';
+import TodoBox from '../containers/TodoBox';
 
 marked.setOptions({ smartypants: true });
 
@@ -77,6 +78,14 @@ const Project = (props) => {
   const verb = time ? moment(project.run_date, 'YYYY-MM-DD').isAfter() ?
     'Running' : 'Ran' : null;
 
+  const todo = project.todos
+    .toRefArray().length > 0 ?
+      (
+        <TodoBox
+          actions={props.actions}
+          todos={project.todos.orderBy('created').toModelArray()}
+        />) : null;
+
   const reporters = project.reporters.length > 0 ? (
     <ul>
       {project.reporters.map(d => (<li>{d.last_name}</li>))}
@@ -141,17 +150,6 @@ const Project = (props) => {
     </a>
   ) : '';
 
-  const notes = project.notes ? (
-    <i
-      className="fa fa-plus-circle fa-fw"
-      title="Notes"
-      onClick={() => props.actions.setNote({
-        body: project.notes,
-        title: project.name,
-      })}
-    />
-  ) : '';
-
   const dragClass = props.isDragging ?
     'transparent' : '';
 
@@ -165,6 +163,7 @@ const Project = (props) => {
           dangerouslySetInnerHTML={{ __html: marked(project.description) }}
         />
       </div>
+      {todo}
       <div className="people">
         <div className="col">
           <h6>Reporters</h6>
@@ -190,7 +189,13 @@ const Project = (props) => {
           {google}
         </div>
       </div>
-      {notes}
+      <i
+        className="fa fa-sticky-note-o fa-fw"
+        title="Notes"
+        onClick={() => props.actions.setNote({
+          project: project.slug,
+        })}
+      />
       <i
         className="fa fa-pencil"
         title="Edit"

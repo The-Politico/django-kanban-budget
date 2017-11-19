@@ -11,14 +11,13 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .authentication import get_bot_token
+from .authentication import secure
 from .celery import create_todo, delete_todo
 from .forms import FullProjectForm, ShortProjectForm
-from .mixins import LoginRequiredMixin, StaffRequiredMixin
 from .models import Board, Project
 
 
-class SecureAuthorCreateView(LoginRequiredMixin, CreateView):
+class SecureAuthorCreateView(CreateView):
     """A login-required class-based create view that saves author from user."""
 
     def form_valid(self, form):
@@ -30,7 +29,8 @@ class SecureAuthorCreateView(LoginRequiredMixin, CreateView):
         return redirect_url
 
 
-class HomeView(StaffRequiredMixin, TemplateView):
+@secure
+class HomeView(TemplateView):
     template_name = "budget/home.html"
 
     def get_context_data(self, **kwargs):
@@ -40,16 +40,19 @@ class HomeView(StaffRequiredMixin, TemplateView):
         return context
 
 
-class BoardDetail(StaffRequiredMixin, DetailView):
+@secure
+class BoardDetail(DetailView):
     model = Board
     context_object_name = 'board'
 
     def get_context_data(self, **kwargs):
         context = super(BoardDetail, self).get_context_data(**kwargs)
-        context['token'] = get_bot_token()
+        context['token'] = getattr(settings, 'BUDGET_SECRET_TOKEN')
+        context['root'] = reverse('budget-boards')
         return context
 
 
+@secure
 class ProjectCreate(SecureAuthorCreateView):
     model = Project
     form_class = FullProjectForm
@@ -60,6 +63,7 @@ class ProjectCreate(SecureAuthorCreateView):
             args=[self.object.status.board.slug])
 
 
+@secure
 class ShortProjectCreate(SecureAuthorCreateView):
     model = Project
     form_class = ShortProjectForm
@@ -71,7 +75,8 @@ class ShortProjectCreate(SecureAuthorCreateView):
             args=[self.object.status.board.slug])
 
 
-class ProjectUpdate(StaffRequiredMixin, UpdateView):
+@secure
+class ProjectUpdate(UpdateView):
     model = Project
     form_class = FullProjectForm
 
@@ -82,7 +87,8 @@ class ProjectUpdate(StaffRequiredMixin, UpdateView):
             args=[project.status.board.slug])
 
 
-class ProjectDelete(StaffRequiredMixin, DeleteView):
+@secure
+class ProjectDelete(DeleteView):
     model = Project
 
     def get_success_url(self):
@@ -94,9 +100,9 @@ class ProjectDelete(StaffRequiredMixin, DeleteView):
 class GithubWebhook(APIView):
     def verify_request(self, request):
         """
-        Verify request is from Github using webhook secret.
+        Verify request is from Github using secret token.
         """
-        SECRET = getattr(settings, 'BUDGET_GITHUB_WEBHOOK_SECRET', None)
+        SECRET = getattr(settings, 'BUDGET_SECRET_TOKEN', None)
         if not SECRET:
             return True
         header_signature = request.META.get('HTTP_X_HUB_SIGNATURE')

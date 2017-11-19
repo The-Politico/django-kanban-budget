@@ -19,3 +19,19 @@ export const updateProject = project => ({
   type: types.UPDATE_PROJECT,
   project,
 });
+
+export const createTodo = todo => ({
+  type: types.CREATE_TODO,
+  todo,
+});
+
+export const deleteTodo = todo => ({
+  type: types.DELETE_TODO,
+  todo,
+});
+
+export const updateNotes = (slug, notes) => ({
+  type: types.UPDATE_NOTES,
+  slug,
+  notes,
+});

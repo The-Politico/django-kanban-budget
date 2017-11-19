@@ -1,21 +1,52 @@
+import operator
+
+from django.conf import settings
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from .models import Board, Column, Project, Tag, Todo, Type
 
+REPORTER_ATTR = getattr(settings, 'BUDGET_REPORTER_ATTR', 'is_staff')
+EDITOR_ATTR = getattr(settings, 'BUDGET_EDITOR_ATTR', 'is_staff')
+DEVELOPER_ATTR = getattr(settings, 'BUDGET_DEVELOPER_ATTR', 'is_superuser')
+
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    reporter = serializers.SerializerMethodField()
+    editor = serializers.SerializerMethodField()
+    developer = serializers.SerializerMethodField()
+
+    def get_reporter(self, obj):
+        f = operator.attrgetter(REPORTER_ATTR)
+        return f(obj) is True  # force to boolean
+
+    def get_editor(self, obj):
+        f = operator.attrgetter(EDITOR_ATTR)
+        return f(obj) is True  # force to boolean
+
+    def get_developer(self, obj):
+        f = operator.attrgetter(DEVELOPER_ATTR)
+        return f(obj) is True  # force to boolean
 
     class Meta:
         model = User
-        fields = ('username', 'last_name')
+        fields = (
+            'id',
+            'username',
+            'last_name',
+            'first_name',
+            'email',
+            'reporter',
+            'editor',
+            'developer',
+        )
 
 
 class TodoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Todo
-        fields = ('pk', 'title', 'github_url')
+        fields = ('id', 'title', 'github_url', 'created')
 
 
 class TagSerializer(serializers.HyperlinkedModelSerializer):

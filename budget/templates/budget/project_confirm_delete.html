@@ -7,7 +7,7 @@
 
 {%block breadcrumb%}
 <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{%url 'home'%}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
     <li class="breadcrumb-item"><a href="{% url 'budget-boards'%}">Budget</a></li>
     <li class="breadcrumb-item active"><a href="{% url 'budget-projects-edit' object.slug%}">{{object.name|truncatechars:25}}</a></li>
     <li class="breadcrumb-item active">Delete</li>

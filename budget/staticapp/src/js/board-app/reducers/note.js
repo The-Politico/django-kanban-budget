@@ -2,8 +2,7 @@ import * as types from '../constants/actions';
 
 export default (currentState, action) => {
   const initialState = {
-    body: '',
-    title: '',
+    project: null,
     open: false,
   };
 
@@ -14,8 +13,7 @@ export default (currentState, action) => {
   switch (action.type) {
     case types.SET_NOTE:
       return Object.assign({}, currentState, {
-        body: action.note.body,
-        title: action.note.title,
+        project: action.note.project,
         open: true,
       });
     case types.OPEN_NOTE:

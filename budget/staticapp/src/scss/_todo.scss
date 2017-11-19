@@ -1,0 +1,57 @@
+.todo-box{
+  width: 100%;
+  @include clearfix();
+
+  .todo-count{
+    width: 60px;
+    float: left;
+    text-align: center;
+    .title{
+      border-bottom: 1px solid grey;
+      margin: 0px 10px 2px;
+      padding-bottom: 2px;
+      font-size: 13px;
+      font-weight: bold;
+      font-family: $sans;
+    }
+    .count{
+      font-family: monospace;
+      font-weight: bold;
+      font-size: 28px;
+    }
+  }
+  .todo-top3{
+    width: calc(100% - 60px);
+
+    float: left;
+    .todo-issue{
+      padding-left: 10px;
+      padding-right: 5px;
+      overflow: hidden;
+      font-size: 12px;
+      font-family: $sans;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      a{
+        color: #333 !important;
+        text-decoration: none;
+        cursor: pointer;
+        &:hover{
+          font-weight: bold;
+        }
+      }
+      &:hover{
+        background-color: #eee;
+      }
+      .fa{
+        color: grey;
+        font-size: 16px;
+        cursor: pointer;
+        margin-right: 5px;
+        &:hover{
+          color: red;
+        }
+      }
+    }
+  }
+}

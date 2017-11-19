@@ -63,7 +63,21 @@ Project.fields = {
   position: attr(),
 };
 
+class Todo extends Model {
+  static get fields() {
+    return {
+      id: attr(),
+      title: attr(),
+      github_url: attr(),
+      created: attr(),
+      project: fk('Project', 'todos'),
+    };
+  }
+}
+
+Todo.modelName = 'Todo';
+
 const orm = new ORM();
-orm.register(Board, Column, Project);
+orm.register(Board, Column, Project, Todo);
 
 export default orm;

@@ -13,12 +13,13 @@
 {%block foot%}
 <input type="hidden" name="board" value="{{board.slug}}" />
 <input type="hidden" name="token" value="{{token}}" />
+<input type="hidden" name="root" value="{{root}}" />
 <script type="text/javascript" src="{%static 'budget/js/main-board-app.bundle.js'%}"></script>
 {%endblock%}
 
 {%block breadcrumb%}
 <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{%url 'home'%}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
     <li class="breadcrumb-item"><a href="{%url 'budget-boards'%}">Budget</a></li>
     <li class="breadcrumb-item active"><b>{{board.name}}</b></li>
 </ol>

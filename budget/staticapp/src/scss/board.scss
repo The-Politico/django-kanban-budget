@@ -1,5 +1,10 @@
 @import 'fonts';
 @import 'colors';
+@import 'mixins';
+@import 'todo';
+@import 'draftjs';
+@import 'note';
+@import 'apistatus';
 
 $boxshadow: 0 1px 6px rgba(0,0,0,0.16), 2px 3px 6px rgba(0,0,0,0.23);
 
@@ -71,7 +76,7 @@ body article.container{
 
     .project{
       margin: 10px 5px 20px 0;
-      padding: 10px 20px 20px;
+      padding: 10px 30px 20px;
       background-color: white;
       box-shadow: $boxshadow;
       position: relative;
@@ -100,7 +105,7 @@ body article.container{
       }
       .title{
         small{
-          font-family: $proxima;
+          font-family: $sans;
           color: grey;
           font-size: 12px;
         }
@@ -131,7 +136,7 @@ body article.container{
           font-size: 24px;
         }
       }
-      i.fa-plus-circle{
+      i.fa-sticky-note-o{
         position: absolute;
         top: 35px;
         right: 5px;
@@ -158,7 +163,7 @@ body article.container{
           ul{
             list-style-type: none;
             list-style-position: outside;
-            font-family: $proxima;
+            font-family: $sans;
             font-size: 12px;
             margin:0;
             padding:0;
@@ -207,7 +212,7 @@ body article.container{
           clear: both;
         }
         .tag{
-          font-family: $proxima;
+          font-family: $sans;
           padding: 1px 3px;
           font-size: 11px;
           display: inline-block;
@@ -223,7 +228,7 @@ body article.container{
         position: absolute;
         bottom: 0;
         right: 0;
-        font-family: $proxima;
+        font-family: $sans;
         color: white;
         padding: 1px 7px;
         text-transform: uppercase;

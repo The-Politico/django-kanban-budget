@@ -17,6 +17,8 @@ const App = (props) => {
     <div>
       <Note
         note={props.board.note}
+        api={props.board.api}
+        session={orm.session(props.board.orm)}
         actions={actions}
       />
       <Board

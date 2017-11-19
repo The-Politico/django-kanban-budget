@@ -42,7 +42,7 @@ class Project(SluggedContentModel):
     preview_url = models.URLField(blank=True, null=True)
     publish_url = models.URLField(blank=True, null=True)
     github = models.URLField(
-        blank=True, null=True,
+        blank=True, null=True, unique=True,
         help_text="HTML url for repository")
     gdoc = models.URLField(blank=True, null=True)
 

@@ -4,13 +4,13 @@
 @import 'forms';
 
 body{
-  font-family: $proxima;
+  font-family: $sans;
 
   h1, h2, h3, h4{
     letter-spacing: 0;
     text-align: left;
     font-weight: bold;
-    font-family:$proxima;
+    font-family:$sans;
     text-transform: none;
   }
 }

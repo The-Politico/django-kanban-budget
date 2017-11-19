@@ -1,26 +1,12 @@
+from importlib import import_module
+
 from django.conf import settings
-from django.contrib.auth.models import AnonymousUser, User
-from django.db import connection
-
+from django.contrib.auth.models import AnonymousUser
+from django.utils.decorators import method_decorator
 from rest_framework import authentication, exceptions
-from rest_framework.authtoken.models import Token
-
-BOT_USERNAME = BOT_EMAIL = 'interactives@politico.com'
-
-BOT, created = User.objects.get_or_create(
-    username=BOT_USERNAME,
-    email=BOT_EMAIL,
-) if 'auth_user' in connection.introspection.table_names() else (None, False)
 
 
-def get_bot_token():
-    BOT_TOKEN, created = Token.objects.get_or_create(user=BOT) \
-        if 'authtoken_token' in connection.introspection.table_names() else \
-        (None, False)
-    return BOT_TOKEN
-
-
-class InteractivesBotAuthentication(authentication.BaseAuthentication):
+class TokenAPIAuthentication(authentication.BaseAuthentication):
     def authenticate(self, request):
         # Don't enforce if DEBUG
         if settings.DEBUG:
@@ -33,12 +19,43 @@ class InteractivesBotAuthentication(authentication.BaseAuthentication):
             raise exceptions.AuthenticationFailed(
                 'No token or incorrect token format')
 
-        try:
-            token = Token.objects.get(key=token)
-        except Token.DoesNotExist:
-            raise exceptions.AuthenticationFailed('Unauthorized')
+        if token == getattr(settings, 'BUDGET_SECRET_TOKEN'):
+            return (AnonymousUser, None)
+        raise exceptions.AuthenticationFailed('Unauthorized')
 
-        if token == get_bot_token():
-            return (token.user, None)
-        # Fall through to default authentication schemes
-        return None
+
+def import_class(val):
+    """Attempt to import a class from a string representation.
+    Pattern borrowed from Django REST Framework.
+    See rest_framework/settings.py#L170-L182
+    """
+    try:
+        parts = val.split('.')
+        module_path, class_name = '.'.join(parts[:-1]), parts[-1]
+        module = import_module(module_path)
+        return getattr(module, class_name)
+    except (ImportError, AttributeError) as e:
+        msg = "Could not import auth/permission class '{}'. {}: {}.".format(
+            val,
+            e.__class__.__name__,
+            e)
+        raise ImportError(msg)
+
+
+def secure(view):
+    """Set an auth decorator applied for views.
+    If DEBUG is on, we serve the view without authenticating.
+    Default is 'django.contrib.auth.decorators.login_required'.
+    Can also be 'django.contrib.admin.views.decorators.staff_member_required'
+    or a custom decorator.
+    """
+    AUTH = getattr(
+        settings,
+        'BUDGET_AUTH_DECORATOR',
+        'django.contrib.auth.decorators.login_required'
+    )
+    auth_decorator = import_class(AUTH)
+    return (
+        view if settings.DEBUG
+        else method_decorator(auth_decorator, name='dispatch')(view)
+    )

@@ -30,6 +30,7 @@ class Todo(models.Model):
     title = models.CharField(max_length=250)
     github_url = models.URLField(
         blank=True, null=True, unique=True, editable=False)
+    created = models.DateTimeField(auto_now_add=True)
     objects = TodoManager()
 
     def __str__(self):

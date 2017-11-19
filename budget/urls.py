@@ -4,7 +4,7 @@ from rest_framework import routers
 from .views import (BoardDetail, GithubWebhook, HomeView, ProjectCreate,
                     ProjectDelete, ProjectUpdate, ShortProjectCreate)
 from .viewsets import (BoardViewSet, ColumnViewSet, ProjectViewSet, TagViewSet,
-                       TodoViewset, TypeViewSet)
+                       TodoViewset, TypeViewSet, UserViewset)
 
 router = routers.DefaultRouter()
 router.register(r'projects', ProjectViewSet)
@@ -13,6 +13,7 @@ router.register(r'columns', ColumnViewSet)
 router.register(r'types', TypeViewSet)
 router.register(r'tags', TagViewSet)
 router.register(r'todos', TodoViewset)
+router.register(r'users', UserViewset)
 
 
 urlpatterns = [
