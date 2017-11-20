@@ -49,8 +49,23 @@
         cursor: pointer;
         margin-right: 5px;
         &:hover{
-          color: red;
+          color: $google;
         }
+      }
+    }
+
+    .extra{
+      .fa{
+        font-size: 15px;
+      }
+      font-family: $sans;
+      font-size: 12px;
+      margin-left: 10px;
+      cursor: pointer;
+      color: #bbb;
+      &:hover{
+        color: #333;
+        font-weight: bold;
       }
     }
   }

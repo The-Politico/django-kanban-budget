@@ -1,7 +1,10 @@
 export const CREATE_BOARD = 'CREATE_BOARD';
 export const CREATE_COLUMN = 'CREATE_COLUMN';
+
 export const CREATE_PROJECT = 'CREATE_PROJECT';
 export const UPDATE_PROJECT = 'UPDATE_PROJECT';
+export const DELETE_PROJECT = 'DELETE_PROJECT';
+
 export const CREATE_TODO = 'CREATE_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
 export const UPDATE_NOTES = 'UPDATE_NOTES';

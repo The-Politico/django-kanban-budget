@@ -5,16 +5,11 @@
 @import 'draftjs';
 @import 'note';
 @import 'apistatus';
+@import 'project/archive-confirm';
 
 $boxshadow: 0 1px 6px rgba(0,0,0,0.16), 2px 3px 6px rgba(0,0,0,0.23);
 
-$google: #ea4335;
-$github: #4078c0;
-$link: #333;
-$preview: #46bc99;
 
-$edit: #66BB6A;
-$notes: #FF7043;
 
 body article.container{
   max-width: 100%;
@@ -75,6 +70,9 @@ body article.container{
 
 
     .project{
+
+      @import 'project/links';
+
       margin: 10px 5px 20px 0;
       padding: 10px 30px 20px;
       background-color: white;
@@ -88,12 +86,12 @@ body article.container{
         width: 15px;
         height: 40px;
         position: absolute;
-        right: 0;
+        right: 5px;
         top: calc(50% - 20px);
         cursor: move;
         cursor: grab;
         &:hover .drag-dots{
-          color: grey;
+          color: #333;
         }
         .drag-dots{
           height: 10px;
@@ -122,33 +120,51 @@ body article.container{
           line-height: 18px;
         }
       }
-      i.fa-pencil{
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        color: lightgrey;
-        cursor: pointer;
-        transition: all .2s;
-        &:hover{
-          top: 5px;
-          right: 5px;
-          color: $edit;
-          font-size: 24px;
+
+      .top-buttons{
+        i.fa-pencil{
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          color: lightgrey;
+          cursor: pointer;
+          transition: all .2s;
+          &:hover{
+            top: 5px;
+            right: 5px;
+            color: $edit;
+            font-size: 24px;
+          }
         }
-      }
-      i.fa-sticky-note-o{
-        position: absolute;
-        top: 35px;
-        right: 5px;
-        font-size: 18px;
-        color: lightgrey;
-        cursor: pointer;
-        transition: all .2s;
-        &:hover{
-          font-size: 24px;
-          top: 30px;
-          right: 0;
-          color: $notes;
+        i.fa-sticky-note-o{
+          position: absolute;
+          top: 35px;
+          right: 5px;
+          font-size: 18px;
+          color: lightgrey;
+          cursor: pointer;
+          transition: all .2s;
+          &:hover{
+            font-size: 24px;
+            top: 30px;
+            right: 0;
+            color: $notes;
+          }
+        }
+        i.fa-trash-o{
+          position: absolute;
+          top: 62px;
+          right: 9px;
+          font-size: 18px;
+          color: lightgrey;
+          cursor: pointer;
+          transition: all .2s;
+          &:hover{
+            font-size: 24px;
+            top: 57px;
+            right: 7px;
+            color: $archive;
+          }
         }
       }
 
@@ -177,30 +193,6 @@ body article.container{
           content: "";
           display: table;
           clear: both;
-        }
-      }
-
-      .links{
-        margin-bottom: -10px;
-        .fa{
-          color: lightgrey;
-          margin-right: 15px;
-          cursor:pointer;
-          font-size: 20px;
-          &:hover{
-            &.fa-github-alt{
-              color: $github;
-            }
-            &.fa-google{
-              color: $google;
-            }
-            &.fa-eye{
-              color:$preview;
-            }
-            &.fa-external-link{
-              color:$link;
-            }
-          }
         }
       }
 

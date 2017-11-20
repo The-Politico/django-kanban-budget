@@ -12,7 +12,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .authentication import secure
-from .celery import create_todo, delete_todo
+from .celery import create_todo, delete_todo, sync_todo
 from .forms import FullProjectForm, ShortProjectForm
 from .models import Board, Project
 
@@ -132,14 +132,20 @@ class GithubWebhook(APIView):
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         payload = request.data
-        action = payload.get('action')
-        repo_url = payload.get('repository').get('html_url')
-        title = payload.get('issue').get('title')
-        issue_url = payload.get('issue').get('html_url')
 
+        if not payload.get('issue', None):
+            return Response(status=status.HTTP_200_OK)
+
+        repo_url = payload.get('repository').get('html_url')
+        issue_url = payload.get('issue').get('html_url')
+        title = payload.get('issue').get('title')
+
+        action = payload.get('action')
         if action == 'opened' or action == 'reopened':
             create_todo.delay(repo_url, issue_url, title)
         elif action == 'closed':
             delete_todo.delay(issue_url)
+        elif action == 'edited':
+            sync_todo.delay(issue_url, title)
 
         return Response(status=status.HTTP_200_OK)

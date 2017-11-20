@@ -48,7 +48,6 @@ class Note extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      noteMD: null,
       editorState: null,
     };
     this.toDraft = (mdString) => EditorState.createWithContent(

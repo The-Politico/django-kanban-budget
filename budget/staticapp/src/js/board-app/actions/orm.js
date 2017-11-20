@@ -20,6 +20,11 @@ export const updateProject = project => ({
   project,
 });
 
+export const deleteProject = slug => ({
+  type: types.DELETE_PROJECT,
+  slug,
+});
+
 export const createTodo = todo => ({
   type: types.CREATE_TODO,
   todo,

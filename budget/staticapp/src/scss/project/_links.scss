@@ -1,0 +1,23 @@
+.links{
+  margin-bottom: -10px;
+  .fa{
+    color: lightgrey;
+    margin-right: 15px;
+    cursor:pointer;
+    font-size: 20px;
+    &:hover{
+      &.fa-github-alt{
+        color: $github;
+      }
+      &.fa-google{
+        color: $google;
+      }
+      &.fa-eye{
+        color:$preview;
+      }
+      &.fa-external-link{
+        color:$link;
+      }
+    }
+  }
+}

@@ -26,6 +26,9 @@ export default (dbState, action) => {
         position: action.project.position,
       });
       break;
+    case types.DELETE_PROJECT:
+      Project.withId(action.slug).delete();
+      break;
     case types.UPDATE_NOTES:
       Project.withId(action.slug).update({
         notes: action.notes,

@@ -128,5 +128,6 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
             'type',
             'tags',
             'position',
-            'todos'
+            'todos',
+            'archive'
         )

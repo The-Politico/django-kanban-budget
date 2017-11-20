@@ -1,0 +1,26 @@
+.archive-dialog{
+  font-family: $sans;
+  p{
+    margin-top: 0;
+  }
+
+  div{
+    text-align: center;
+  }
+  button{
+    border-radius: 0;
+    font-size: 16px;
+    padding: 5px;
+    cursor: pointer;
+    background-color: white;
+    margin-right: 10px;
+    border: 1px solid grey;
+    width: 70px;
+    &:hover{
+      background-color: lightgrey;
+    }
+    &:focus{
+      outline: none;
+    }
+  }
+}
