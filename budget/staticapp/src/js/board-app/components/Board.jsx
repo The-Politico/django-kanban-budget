@@ -155,6 +155,7 @@ class Board extends Component {
 Board.propTypes = {
   actions: PropTypes.object.isRequired,
   session: PropTypes.object.isRequired,
+  api: PropTypes.object.isRequired,
 };
 
 export default Board;

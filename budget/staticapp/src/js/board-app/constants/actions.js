@@ -17,3 +17,19 @@ export const API_SENDING = 'API_SENDING';
 export const API_SUCCESS = 'API_SUCCESS';
 export const API_ERROR = 'API_ERROR';
 export const API_RESET = 'API_RESET';
+
+export const CREATE_USER = 'CREATE_USER';
+export const ADD_REPORTER = 'ADD_REPORTER';
+export const REMOVE_REPORTER = 'REMOVE_REPORTER';
+export const ADD_EDITOR = 'ADD_EDITOR';
+export const REMOVE_EDITOR = 'REMOVE_EDITOR';
+export const ADD_DEVELOPER = 'ADD_DEVELOPER';
+export const REMOVE_DEVELOPER = 'REMOVE_DEVELOPER';
+
+export const CREATE_TAG = 'CREATE_TAG';
+export const ADD_TAG = 'ADD_TAG';
+export const REMOVE_TAG = 'REMOVE_TAG';
+
+export const CREATE_TYPE = 'CREATE_TYPE';
+export const ADD_TYPE = 'ADD_TYPE';
+export const REMOVE_TYPE = 'REMOVE_TYPE';

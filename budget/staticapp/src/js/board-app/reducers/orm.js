@@ -7,7 +7,7 @@ export default (dbState, action) => {
   }
 
   const session = orm.session(dbState);
-  const { Board, Column, Project, Todo } = session;
+  const { Board, Column, Project, Todo, User, Tag, Type } = session;
 
 
   switch (action.type) {
@@ -39,6 +39,65 @@ export default (dbState, action) => {
       break;
     case types.DELETE_TODO:
       Todo.withId(action.todo.id).delete();
+      break;
+    case types.CREATE_USER:
+      User.upsert(action.user);
+      break;
+    case types.ADD_REPORTER:
+      Project
+        .withId(action.project)
+        .reporters.add(action.user);
+      break;
+    case types.REMOVE_REPORTER:
+      Project
+        .withId(action.project)
+        .reporters.remove(action.user);
+      break;
+    case types.ADD_EDITOR:
+      Project
+        .withId(action.project)
+        .editors.add(action.user);
+      break;
+    case types.REMOVE_EDITOR:
+      Project
+        .withId(action.project)
+        .editors.remove(action.user);
+      break;
+    case types.ADD_DEVELOPER:
+      Project
+        .withId(action.project)
+        .developers.add(action.user);
+      break;
+    case types.REMOVE_DEVELOPER:
+      Project
+        .withId(action.project)
+        .developers.remove(action.user);
+      break;
+    case types.CREATE_TAG:
+      Tag.upsert(action.tag);
+      break;
+    case types.ADD_TAG:
+      Project
+        .withId(action.project)
+        .tags.add(action.tag);
+      break;
+    case types.REMOVE_TAG:
+      Project
+        .withId(action.project)
+        .tags.remove(action.tag);
+      break;
+    case types.CREATE_TYPE:
+      Type.upsert(action.projtype);
+      break;
+    case types.ADD_TYPE:
+      Project
+        .withId(action.project)
+        .type = action.projtype;
+      break;
+    case types.REMOVE_TYPE:
+      Project
+        .withId(action.project)
+        .type = null;
       break;
     default:
       break;

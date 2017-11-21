@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import TodoItem from './Todo';
+import TodoEdit from './TodoEdit';
 
 
 class TodoBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      openFullList: false,
+      openEditModal: false,
     };
   }
 
   render() {
-    if (this.props.todos.length === 0) return null;
-    // Display first 3
-    const todos = this.props.todos
+    const todosArr = this.props.project.todos.orderBy('created').toModelArray();
+    // if (todosArr.length === 0) return null;
+    // Display first 2
+    const todos = todosArr
       .reverse()
       .slice(0, 2)
       .map(todo => (
@@ -24,7 +26,7 @@ class TodoBox extends Component {
         />
       ));
 
-    const todoExtra = this.props.todos.length > 2 ?
+    const todoExtra = todosArr.length > 2 ?
       (<span><i className="fa fa-plus-square" /> More...</span>) :
       (<span><i className="fa fa-pencil" /> Edit...</span>);
 
@@ -32,22 +34,35 @@ class TodoBox extends Component {
       <div className="todo-box clearfix">
         <div className="todo-count">
           <div className="title">TODO</div>
-          <div className="count">{this.props.todos.length}</div>
+          <div className="count">{todosArr.length}</div>
         </div>
         <div className="todo-top3">
           {todos}
           <div className="extra">
-            {todoExtra}
+            <div
+              onClick={() => this.setState({ openEditModal: true })}
+            >
+              {todoExtra}
+            </div>
           </div>
         </div>
+        <TodoEdit
+          open={this.state.openEditModal}
+          todos={todosArr}
+          closeModal={() => this.setState({ openEditModal: false })}
+          project={this.props.project}
+          actions={this.props.actions}
+          api={this.props.api}
+        />
       </div>
     );
   }
 }
 
 TodoBox.propTypes = {
-  todos: PropTypes.array.isRequired,
+  project: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
+  api: PropTypes.object.isRequired,
 };
 
 export default TodoBox;

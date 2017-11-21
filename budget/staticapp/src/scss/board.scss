@@ -6,10 +6,15 @@
 @import 'note';
 @import 'apistatus';
 @import 'project/archive-confirm';
+@import 'project/todoedit';
+
 
 $boxshadow: 0 1px 6px rgba(0,0,0,0.16), 2px 3px 6px rgba(0,0,0,0.23);
 
 
+body{
+  background: #f7f8f8;
+}
 
 body article.container{
   max-width: 100%;

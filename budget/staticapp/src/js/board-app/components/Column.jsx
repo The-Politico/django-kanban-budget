@@ -65,6 +65,7 @@ Column.propTypes = {
   changeProjectPosition: PropTypes.func.isRequired,
   isOver: PropTypes.bool.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
+  api: PropTypes.object.isRequired,
 };
 
 export default dropTarget(ItemTypes.PROJECT, columnTarget, collect)(Column);

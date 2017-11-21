@@ -8,7 +8,7 @@ const store = createStore(reducers, compose(
   applyMiddleware(thunkMiddleware),
   window.devToolsExtension ? window.devToolsExtension() : f => f));
 
-store.dispatch(actions.fetchBoard());
+store.dispatch(actions.fetchUsers());
 
 store.subscribe(() => {
   window.store = _.assign({}, store.getState());

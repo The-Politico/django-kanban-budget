@@ -20,11 +20,11 @@ const ConfirmModal = (props) => (
         <button
           onClick={() => {
             props.closeModal();
+            props.deleteProject(props.projectSlug);
             props.patchProject({
               slug: props.projectSlug,
               archive: true,
             });
-            props.deleteProject(props.projectSlug);
           }}
         >
           Yes

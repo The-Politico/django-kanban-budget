@@ -42,11 +42,30 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
+class SlimUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            'id',
+        )
+
+
 class TodoSerializer(serializers.ModelSerializer):
+    project = serializers.SlugField(source='project.slug')
 
     class Meta:
         model = Todo
-        fields = ('id', 'title', 'github_url', 'created')
+        fields = ('id', 'title', 'github_url', 'created', 'project')
+
+    def create(self, validated_data):
+        project = validated_data.pop('project')
+        validated_data['project'] = Project.objects.get(slug=project['slug'])
+        return Todo.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.title = validated_data.get('title', instance.title)
+        instance.save()
+        return instance
 
 
 class TagSerializer(serializers.HyperlinkedModelSerializer):
@@ -96,15 +115,21 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
         slug_field='slug',
         queryset=Column.objects.all()
     )
-    editors = UserSerializer(many=True, read_only=True)
-    reporters = UserSerializer(many=True, read_only=True)
-    developers = UserSerializer(many=True, read_only=True)
+    editors = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=User.objects.all())
+    reporters = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=User.objects.all())
+    developers = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=User.objects.all())
     tags = serializers.SlugRelatedField(
         many=True,
-        slug_field='name',
+        slug_field='slug',
         queryset=Tag.objects.all()
     )
-    type = TypeSerializer(read_only=True)
+    type = serializers.SlugRelatedField(
+        slug_field='slug',
+        queryset=Type.objects.all()
+    )
     edit_url = serializers.URLField(source='get_absolute_url')
     todos = TodoSerializer(many=True, read_only=True)
 

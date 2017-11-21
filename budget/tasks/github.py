@@ -42,6 +42,6 @@ def sync_issue(pk):
         issue = repo.get_issue_by_url(todo.github_url)
         if issue and issue.title != todo.title:
             issue.edit(title=todo.title)
-    elif not repo.get_issue_by_title(todo.title):
+    else:
         issue = repo.create_issue(title=todo.title)
         Todo.objects.filter(pk=pk).update(github_url=issue.html_url)

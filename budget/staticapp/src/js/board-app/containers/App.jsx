@@ -24,6 +24,7 @@ const App = (props) => {
       <Board
         session={orm.session(props.board.orm)}
         actions={actions}
+        api={props.board.api}
       />
     </div>
   );
