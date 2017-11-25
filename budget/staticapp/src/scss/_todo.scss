@@ -7,8 +7,7 @@
     float: left;
     text-align: center;
     .title{
-      border-bottom: 1px solid grey;
-      margin: 0px 10px 2px;
+      margin: 0px 10px;
       padding-bottom: 2px;
       font-size: 13px;
       font-weight: bold;
@@ -18,6 +17,8 @@
       font-family: monospace;
       font-weight: bold;
       font-size: 28px;
+      border-top: 1px solid grey;
+      margin: 0px 10px;
     }
   }
   .todo-top3{

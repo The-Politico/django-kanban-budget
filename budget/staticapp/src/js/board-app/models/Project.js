@@ -19,7 +19,6 @@ Project.fields = {
   run_date: attr(),
   preview_url: attr(),
   publish_url: attr(),
-  edit_url: attr(),
   github: attr(),
   gdoc: attr(),
   reporters: many('User', 'reporter_projects'),

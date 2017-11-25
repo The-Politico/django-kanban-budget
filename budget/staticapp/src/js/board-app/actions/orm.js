@@ -1,8 +1,9 @@
 import * as types from '../constants/actions';
 
-export const createBoard = board => ({
+export const createBoard = (board, active) => ({
   type: types.CREATE_BOARD,
   board,
+  active,
 });
 
 export const createColumn = column => ({

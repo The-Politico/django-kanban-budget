@@ -1,4 +1,4 @@
-{%extends 'base.html'%}
+{%extends 'budget/base.html'%}
 {%load staticfiles%}
 {%load markdown_tags%}
 
@@ -6,15 +6,14 @@
 {%endblock%}
 
 {%block head%}
-<link rel="stylesheet" href="{%static 'budget/css/main.css'%}">
-<link rel="stylesheet" href="{%static 'budget/css/board.css'%}">
+<link rel="stylesheet" href="{%static 'budget/css/main-board-app.css'%}">
 {%endblock%}
 
 {%block foot%}
 <input type="hidden" name="board" value="{{board.slug}}" />
 <input type="hidden" name="token" value="{{token}}" />
 <input type="hidden" name="root" value="{{root}}" />
-<script type="text/javascript" src="{%static 'budget/js/main-board-app.bundle.js'%}"></script>
+<script type="text/javascript" src="{%static 'budget/js/main-board-app.js'%}"></script>
 {%endblock%}
 
 {%block breadcrumb%}
@@ -27,17 +26,4 @@
 
 {%block content%}
 <div id="board"></div>
-{%endblock%}
-
-{%block footer%}
-{% if request.user.is_superuser %}
-  <a href="{%url 'budget-projects-create'%}">
-    <button class="nav-button"><i class="fa fa-plus"></i> Create</button>
-  </a>
-{% else %}
-  <a href="{%url 'budget-projects-pitch'%}">
-    <button class="nav-button"><i class="fa fa-plus"></i> Pitch</button>
-  </a>
-{% endif %}
-{{block.super}}
 {%endblock%}

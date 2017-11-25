@@ -6,7 +6,7 @@ const TopButtons = (props) => (
     <i
       className="fa fa-pencil"
       title="Edit"
-      onClick={() => { window.location = props.project.edit_url; }}
+      onClick={props.showProjectEdit}
     />
     <i
       className="fa fa-sticky-note-o fa-fw"
@@ -28,6 +28,7 @@ TopButtons.propTypes = {
   project: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
   showArchiveConfirm: PropTypes.func.isRequired,
+  showProjectEdit: PropTypes.func.isRequired,
 };
 
 export default TopButtons;

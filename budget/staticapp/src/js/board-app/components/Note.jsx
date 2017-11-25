@@ -67,7 +67,7 @@ class Note extends Component {
     if (nextProps.note.open && !this.props.note.open) {
       const project = nextProps.session.Project.withId(nextProps.note.project);
       this.setState({
-        editorState: this.toDraft(project.notes),
+        editorState: this.toDraft(project.notes || ''),
       });
     }
   }

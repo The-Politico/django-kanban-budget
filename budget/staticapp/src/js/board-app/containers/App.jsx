@@ -9,6 +9,7 @@ import Actions from '../actions/';
 import Board from '../components/Board';
 import orm from '../models';
 import Note from '../components/Note';
+import TopButtons from '../components/board/TopButtons';
 
 
 const App = (props) => {
@@ -25,6 +26,13 @@ const App = (props) => {
         session={orm.session(props.board.orm)}
         actions={actions}
         api={props.board.api}
+        filters={props.board.filters}
+      />
+      <TopButtons
+        session={orm.session(props.board.orm)}
+        actions={actions}
+        api={props.board.api}
+        filters={props.board.filters}
       />
     </div>
   );

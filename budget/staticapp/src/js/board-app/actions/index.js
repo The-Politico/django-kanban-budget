@@ -2,6 +2,7 @@ import _ from 'lodash';
 import * as apiActions from './api';
 import * as ormActions from './orm';
 import * as noteActions from './note';
+import * as filterActions from './filters';
 import fetchBoard from './fetch/board';
 import fetchColumns from './fetch/columns';
 import fetchProjects from './fetch/projects';
@@ -14,6 +15,7 @@ const actions = _.assign({},
   apiActions,
   ormActions,
   noteActions,
+  filterActions,
   {
     fetchBoard,
     fetchColumns,

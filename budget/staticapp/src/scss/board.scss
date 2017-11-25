@@ -1,13 +1,16 @@
 @import 'fonts';
 @import 'colors';
 @import 'mixins';
+@import 'breadcrumb';
 @import 'todo';
 @import 'draftjs';
 @import 'note';
 @import 'apistatus';
 @import 'project/archive-confirm';
 @import 'project/todoedit';
-
+@import 'project/projectedit';
+@import 'board/topbuttons';
+@import 'board/filters';
 
 $boxshadow: 0 1px 6px rgba(0,0,0,0.16), 2px 3px 6px rgba(0,0,0,0.23);
 
@@ -22,7 +25,10 @@ body article.container{
   margin: 0;
   padding: 0;
   overflow-y: hidden;
-  height: calc(100vh - 125px);
+  height: calc(100vh - 95px);
+  box-shadow:
+        inset 0px 12px 8px -10px #CCC,
+        inset 0px -12px 8px -10px #CCC;
   & > h2{
     margin-top:0;
   }
@@ -79,10 +85,11 @@ body article.container{
       @import 'project/links';
 
       margin: 10px 5px 20px 0;
-      padding: 10px 30px 20px;
+      padding: 10px 30px 20px 20px;
       background-color: white;
       box-shadow: $boxshadow;
       position: relative;
+      border-left: 1px solid #eee;
 
       &.transparent{
         opacity: .6;
@@ -191,6 +198,10 @@ body article.container{
             .empty{
               font-weight: bold;
               color: #999;
+            }
+            li{
+              overflow: hidden;
+              text-overflow: ellipsis;
             }
           }
         }

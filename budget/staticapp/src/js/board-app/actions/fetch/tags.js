@@ -12,11 +12,10 @@ const fetchTags = () =>
       response => response.json())
     .then(
       tags =>
-        Promise.all(tags.map(tag =>
-          dispatch(ormActions.createTag(tag))
-        ).concat([
+        Promise.all([
+          ...tags.map(tag => dispatch(ormActions.createTag(tag))),
           dispatch(fetchTypes()),
-        ]))
+        ])
     )
     .catch((error) => {
       console.log('API ERROR', error);

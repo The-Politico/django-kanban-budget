@@ -22,6 +22,8 @@ export const apiReset = () => ({
   type: types.API_RESET,
 });
 
+const apiResetTimeout = 3000;
+
 let resetTimeout;
 
 export const patchProject = (project) =>
@@ -32,12 +34,34 @@ export const patchProject = (project) =>
       _.assign({}, PATCH, { body: JSON.stringify(project) }))
       .then(response => response.json())
       .then(() => {
-        resetTimeout = setTimeout(() => dispatch(apiReset()), 3000);
+        resetTimeout = setTimeout(() => dispatch(apiReset()), apiResetTimeout);
         return dispatch(apiSuccess());
       })
       .catch((error) => {
         console.log('API ERROR', error);
-        resetTimeout = setTimeout(() => dispatch(apiReset()), 3000);
+        resetTimeout = setTimeout(() => dispatch(apiReset()), apiResetTimeout);
+        return dispatch(apiSuccess());
+      });
+  };
+
+export const apiCreateProject = (project) =>
+  dispatch => {
+    clearTimeout(resetTimeout);
+    dispatch(apiSend());
+    return fetch(`${ROOT}api/projects/`,
+      _.assign({}, POST, { body: JSON.stringify(project) }))
+      .then(response => response.json())
+      .then((sluggedProject) => {
+        delete sluggedProject.todos;
+        resetTimeout = setTimeout(() => dispatch(apiReset()), apiResetTimeout);
+        return Promise.all([
+          dispatch(ormActions.createProject(sluggedProject)),
+          dispatch(apiSuccess()),
+        ]);
+      })
+      .catch((error) => {
+        console.log('API ERROR', error);
+        resetTimeout = setTimeout(() => dispatch(apiReset()), apiResetTimeout);
         return dispatch(apiSuccess());
       });
   };
@@ -52,8 +76,7 @@ export const apiCreateTodo = (todo) =>
       _.assign({}, POST, { body: JSON.stringify(todo) }))
       .then(response => response.json())
       .then((data) => {
-        console.log('Returned data', data);
-        resetTimeout = setTimeout(() => dispatch(apiReset()), 3000);
+        resetTimeout = setTimeout(() => dispatch(apiReset()), apiResetTimeout);
         return Promise.all([
           dispatch(apiSuccess()),
           dispatch(ormActions.createTodo(data)),
@@ -61,7 +84,7 @@ export const apiCreateTodo = (todo) =>
       })
       .catch((error) => {
         console.log('API ERROR', error);
-        resetTimeout = setTimeout(() => dispatch(apiReset()), 3000);
+        resetTimeout = setTimeout(() => dispatch(apiReset()), apiResetTimeout);
         return dispatch(apiSuccess());
       });
   };
@@ -74,7 +97,7 @@ export const apiPatchTodo = (todo) =>
       _.assign({}, PATCH, { body: JSON.stringify(todo) }))
       .then(response => response.json())
       .then((data) => {
-        resetTimeout = setTimeout(() => dispatch(apiReset()), 3000);
+        resetTimeout = setTimeout(() => dispatch(apiReset()), apiResetTimeout);
         return Promise.all([
           dispatch(apiSuccess()),
           dispatch(ormActions.createTodo(data)),
@@ -82,7 +105,7 @@ export const apiPatchTodo = (todo) =>
       })
       .catch((error) => {
         console.log('API ERROR', error);
-        resetTimeout = setTimeout(() => dispatch(apiReset()), 3000);
+        resetTimeout = setTimeout(() => dispatch(apiReset()), apiResetTimeout);
         return dispatch(apiSuccess());
       });
   };

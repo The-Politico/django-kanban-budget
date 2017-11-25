@@ -12,19 +12,17 @@ const fetchProjects = (column) =>
     .then(
       projects =>
         Promise.all(
-          projects.map(d => {
-            const todos = d.todos.slice();
-            delete d.todos; // eslint-disable-line no-param-reassign
+          projects.map(project => {
+            const todos = project.todos.slice();
+            delete project.todos; // eslint-disable-line no-param-reassign
 
             const dispatches = todos.map(todo =>
               dispatch(ormActions.createTodo(todo)));
 
-            const promises = dispatches.concat(
-              [
-                dispatch(ormActions.createProject(d)),
-              ]);
-
-            return Promise.all(promises);
+            return Promise.all([
+              ...dispatches,
+              dispatch(ormActions.createProject(project)),
+            ]);
           }
         )
       )

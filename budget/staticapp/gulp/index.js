@@ -1,9 +1,8 @@
-var gulp = require('gulp');
+const gulp = require('gulp');
 
-module.exports = function(tasks) {
-    tasks.forEach(function(name) {
-        gulp.task(name, require('./tasks/' + name));
-    });
-
-    return gulp;
+module.exports = (tasks) => {
+  tasks.forEach((name) => {
+    gulp.task(name, require(`./tasks/${name}`)); // eslint-disable-line
+  });
+  return gulp;
 };

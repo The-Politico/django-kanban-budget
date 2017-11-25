@@ -1,5 +1,6 @@
 import * as types from '../constants/actions';
 import orm from '../models/';
+import _ from 'lodash';
 
 export default (dbState, action) => {
   if (typeof dbState === 'undefined') {
@@ -12,7 +13,9 @@ export default (dbState, action) => {
 
   switch (action.type) {
     case types.CREATE_BOARD:
-      Board.upsert(action.board);
+      Board.upsert(_.assign(
+        {}, action.board, { active: action.active }
+      ));
       break;
     case types.CREATE_COLUMN:
       Column.upsert(action.column);

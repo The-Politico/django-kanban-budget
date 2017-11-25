@@ -26,15 +26,34 @@ class TodoBox extends Component {
         />
       ));
 
-    const todoExtra = todosArr.length > 2 ?
-      (<span><i className="fa fa-plus-square" /> More...</span>) :
-      (<span><i className="fa fa-pencil" /> Edit...</span>);
+    let todoExtra;
+
+    switch (todosArr.length) {
+      case 0:
+        todoExtra = (
+          <span><i className="fa fa-pencil" /> Add TODOs...</span>
+        );
+        break;
+      case 1:
+      case 2:
+        todoExtra = (
+          <span><i className="fa fa-pencil" /> Edit...</span>
+        );
+        break;
+      default:
+        todoExtra = (
+          <span><i className="fa fa-plus-square" /> More...</span>
+        );
+    }
 
     return (
       <div className="todo-box clearfix">
         <div className="todo-count">
           <div className="title">TODO</div>
-          <div className="count">{todosArr.length}</div>
+          <div
+            className="count"
+            hidden={todosArr.length === 0}
+          >{todosArr.length}</div>
         </div>
         <div className="todo-top3">
           {todos}

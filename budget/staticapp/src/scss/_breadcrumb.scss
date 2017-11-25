@@ -1,0 +1,24 @@
+.breadcrumb {
+  padding: 0 15px 8px;
+  margin-bottom: 10px;
+  margin-top: 0;
+  list-style: none;
+  border-radius: 2px;
+  font-size: 14px;
+
+  > li {
+    display: inline-block;
+
+    + li:before {
+      // [converter] Workaround for https://github.com/sass/libsass/issues/1115
+      $nbsp: "\00a0";
+      content: "/#{$nbsp}"; // Unicode space added since inline-block means non-collapsing white-space
+      padding: 0 5px;
+      color: grey;
+    }
+  }
+
+  > .active {
+    color: grey;
+  }
+}

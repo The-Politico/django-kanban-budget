@@ -1,8 +1,6 @@
-var gulp = require('./gulp')([
-  'sass',
-  'browserify',
-  'watch',
+const gulp = require('./gulp')([
+  'dev',
+  'build',
 ]);
 
-gulp.task('build', ['sass', 'browserify', 'watch']);
-gulp.task('default', ['build']);
+gulp.task('default', ['dev']);

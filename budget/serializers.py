@@ -116,21 +116,22 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
         queryset=Column.objects.all()
     )
     editors = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=User.objects.all())
+        many=True, required=False, queryset=User.objects.all())
     reporters = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=User.objects.all())
+        many=True, required=False, queryset=User.objects.all())
     developers = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=User.objects.all())
+        many=True, required=False, queryset=User.objects.all())
     tags = serializers.SlugRelatedField(
         many=True,
+        required=False,
         slug_field='slug',
         queryset=Tag.objects.all()
     )
     type = serializers.SlugRelatedField(
         slug_field='slug',
+        required=False,
         queryset=Type.objects.all()
     )
-    edit_url = serializers.URLField(source='get_absolute_url')
     todos = TodoSerializer(many=True, read_only=True)
 
     class Meta:
@@ -143,7 +144,6 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
             'run_date',
             'preview_url',
             'publish_url',
-            'edit_url',
             'github',
             'gdoc',
             'reporters',

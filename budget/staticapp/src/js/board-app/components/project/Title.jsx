@@ -9,9 +9,9 @@ const Title = (props) => {
   const project = props.project;
 
   const time = project.run_date !== null ?
-    moment(project.run_date, 'YYYY-MM-DD').fromNow() : false;
+    moment(project.run_date).fromNow() : false;
   // eslint-disable-next-line no-nested-ternary
-  const verb = time ? moment(project.run_date, 'YYYY-MM-DD').isAfter() ?
+  const verb = time ? moment(project.run_date).isAfter() ?
     'Running' : 'Ran' : null;
 
   return (

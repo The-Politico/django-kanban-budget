@@ -15,6 +15,7 @@ Board.fields = {
   name: attr(),
   slug: attr(),
   position: attr(),
+  active: attr(),
 };
 
 export default Board;

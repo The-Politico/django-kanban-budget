@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import moment from 'moment';
 import Column from '../components/Column';
 
 class Board extends Component {
@@ -16,8 +17,7 @@ class Board extends Component {
   }
 
   componentWillReceiveProps(props) {
-    const { Project } = props.session;
-    const newProjects = Project.all().toRefArray()
+    const newProjects = this.filterProjects(props).toRefArray()
       .map(project => ({
         slug: project.slug,
         position: project.position,
@@ -26,6 +26,43 @@ class Board extends Component {
     this.state = {
       projects: this.reSerialize(newProjects),
     };
+  }
+
+  /**
+   * Filters Projects by filters in state.
+   * @return {Queryset}
+   */
+  filterProjects(props) {
+    const { developers, types, startDate, endDate } = props.filters;
+    const { Project, ProjectDevelopers } = props.session;
+    return Project
+      // Filter by developers
+      .filter(p => {
+        if (developers.length === 0) return true;
+        return _.intersection(
+          ProjectDevelopers
+            .filter(pd => pd.fromProjectId === p.slug)
+            .toRefArray().map(pd => pd.toUserId),
+          developers
+        ).length > 0;
+      })
+      // Filter by type
+      .filter(p => {
+        if (types.length === 0) return true;
+        return types.indexOf(p.type) >= 0;
+      })
+      // Filter by run date
+      .filter(p => {
+        if (!startDate || !endDate) return true;
+        if (!p.run_date) return false;
+        const runDate = moment(p.run_date);
+        return runDate.isBetween(
+          startDate.startOf('day'),
+          endDate.endOf('day'),
+          null,
+          '[]'
+        );
+      });
   }
 
   /**
@@ -131,19 +168,22 @@ class Board extends Component {
 
   render() {
     const ColumnModel = this.props.session.Column;
-    const Columns = ColumnModel.all().toRefArray().map(column => {
-      const projects = _.filter(this.state.projects, { column: column.slug });
-      return (
-        <Column
-          {...this.props}
-          slug={column.slug}
-          projects={projects}
-          saveOnDrop={this.saveOnDrop}
-          changeProjectColumn={this.changeProjectColumn}
-          changeProjectPosition={this.changeProjectPosition}
-        />
-      );
-    });
+    const BoardModel = this.props.session.Board;
+    const Columns = ColumnModel
+      .filter(d => d.board === BoardModel.filter(b => b.active).first().slug)
+      .toRefArray().map(column => {
+        const projects = _.filter(this.state.projects, { column: column.slug });
+        return (
+          <Column
+            {...this.props}
+            slug={column.slug}
+            projects={projects}
+            saveOnDrop={this.saveOnDrop}
+            changeProjectColumn={this.changeProjectColumn}
+            changeProjectPosition={this.changeProjectPosition}
+          />
+        );
+      });
     return (
       <div className="board">
         {Columns}
@@ -156,6 +196,7 @@ Board.propTypes = {
   actions: PropTypes.object.isRequired,
   session: PropTypes.object.isRequired,
   api: PropTypes.object.isRequired,
+  filters: PropTypes.object.isRequired,
 };
 
 export default Board;

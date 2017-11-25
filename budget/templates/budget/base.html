@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -5,30 +6,21 @@
         <meta charset="utf-8">
         {%block title%}<title>POLITICO Interactives</title>{%endblock%}
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        {%block dependency_styles%}{%endblock%}
-        <link href="/styles.css" rel="stylesheet">
         {%block head%}{%endblock%}
     </head>
     <body>
     {%block body%}
       {%block nav%}
-      <nav title="navigation light-theme">
+      <nav title="navigation">
           <div id="global-header">
-            <div id="global-header-inner">
-                <div id="global-branding">
-                   <a class="navbar-brand" href="/" title="POLITICO" target="_top">
-                     <span class="icon icon-politico "></span>
-                     <span class="icon-text">POLITICO</span>
-                     <span class="superscript">datalab</span>
-                   </a>
-                </div>
-            </div>
+            <h1>django-budget</h1>
           </div>
           <div class="clear"></div>
+          {%block breadcrumb%}{%endblock%}
      </nav>
      {%endblock nav%}
 
-     {%block breadcrumb%}{%endblock%}
+
 
      <article class="container">
         {%block content%}
@@ -38,8 +30,10 @@
      <footer>
        <div id="global-footer">
          <div class="footer-branding">
-           &copy;{%now "Y"%}<a class="navbar-brand" href="http://www.politico.com/" title="POLITICO" target="_top">
-             <span class="icon icon-politico"></span>
+           <img
+            style="height: 20px; margin-top: 6px;"
+            src="https://rawgithub.com/The-Politico/src/master/images/logo/badge.png"
+          />
          </a>
         </div>
        </div>

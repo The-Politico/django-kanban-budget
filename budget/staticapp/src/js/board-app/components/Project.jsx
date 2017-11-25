@@ -13,6 +13,7 @@ import Tags from './project/Tags';
 import Links from './project/Links';
 import Type from './project/Type';
 import ArchiveConfirm from './project/ArchiveConfirm';
+import ProjectEdit from './project/ProjectEdit';
 
 
 const projectSource = {
@@ -70,6 +71,7 @@ class Project extends Component {
     super(props);
     this.state = {
       showArchiveConfirm: false,
+      showProjectEdit: false,
     };
   }
 
@@ -91,6 +93,7 @@ class Project extends Component {
           project={project}
           actions={this.props.actions}
           showArchiveConfirm={() => this.setState({ showArchiveConfirm: true })}
+          showProjectEdit={() => this.setState({ showProjectEdit: true })}
         />
         <Title project={project} />
         <TodoBox
@@ -116,6 +119,14 @@ class Project extends Component {
           closeModal={() => this.setState({ showArchiveConfirm: false })}
           patchProject={this.props.actions.patchProject}
           deleteProject={this.props.actions.deleteProject}
+        />
+        <ProjectEdit
+          actions={this.props.actions}
+          api={this.props.api}
+          project={project}
+          session={this.props.session}
+          open={this.state.showProjectEdit}
+          closeModal={() => this.setState({ showProjectEdit: false })}
         />
       </div>
     ));

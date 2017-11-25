@@ -1,0 +1,35 @@
+.create-filter-buttons{
+  position: fixed;
+  top: 0;
+  right: 0;
+  button{
+    font-size: 22px;
+    border-radius: 50%;
+    margin-right: 10px;
+    padding: 5px;
+    height: 45px;
+    width: 45px;
+    text-align: center;
+    margin-top: 10px;
+    border: 0;
+    color: white;
+    @include box_shadow(1);
+    cursor: pointer;
+    transition: all .2s;
+    &:hover{
+      @include box_shadow(3);
+    }
+    &.create{
+      background: $google;
+    }
+    &.filter{
+      background: $github;
+    }
+    &:active, &:focus{
+      outline: none;
+    }
+    &:active{
+      @include box_shadow(1);
+    }
+  }
+}

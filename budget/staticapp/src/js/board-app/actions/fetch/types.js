@@ -2,7 +2,7 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 import * as ormActions from '../orm';
 import { ROOT, GET } from '../../constants/api';
-import fetchBoard from './board';
+import fetchBoards from './board';
 
 require('es6-promise').polyfill();
 
@@ -12,11 +12,10 @@ const fetchTypes = () =>
       response => response.json())
     .then(
       types =>
-        Promise.all(types.map(type =>
-          dispatch(ormActions.createType(type))
-        ).concat([
-          dispatch(fetchBoard()),
-        ]))
+        Promise.all([
+          ...types.map(type => dispatch(ormActions.createType(type))),
+          dispatch(fetchBoards()),
+        ])
     )
     .catch((error) => {
       console.log('API ERROR', error);

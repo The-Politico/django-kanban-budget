@@ -12,11 +12,10 @@ const fetchUsers = () =>
       response => response.json())
     .then(
       users =>
-        Promise.all(users.map(user =>
-          dispatch(ormActions.createUser(user))
-        ).concat([
+        Promise.all([
+          ...users.map(user => dispatch(ormActions.createUser(user))),
           dispatch(fetchTags()),
-        ]))
+        ])
     )
     .catch((error) => {
       console.log('API ERROR', error);

@@ -1,0 +1,93 @@
+.filter-panel{
+  position: fixed;
+  top: 68px;
+  height: calc(100vh - 141px);
+  right: -50%;
+  width: 350px;
+  background: #fff;
+  transition: right .25s ease-in-out;
+  border: 1px solid lightgrey;
+  padding: 20px 30px;
+  &.open{
+    right: 0px;
+  }
+
+  button.reset{
+    border-radius: 2px;
+    font-size: 16px;
+    border:1px solid #eee;
+    color: #eee;
+    background-color: #fff;
+    cursor: pointer;
+    pointer-events: none;
+    &.active{
+      color: grey;
+      border:1px solid lightgrey;
+      pointer-events: auto;
+    }
+    &:active, &:focus{
+      outline: none;
+    }
+  }
+
+  .fa-times{
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    color: lightgrey;
+    font-size: 24px;
+    &:hover{
+      color: grey;
+    }
+  }
+  .filter-options{
+    .filter-option{
+      cursor: pointer;
+      display: inline-block;
+      padding: 2px 10px;
+      width: calc(50% - 20px);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      i{
+        font-size: 20px;
+        margin-right: 2px;
+        color: grey;
+        &.fa-check-square{
+          color: $github;
+        }
+      }
+    }
+  }
+
+  .DateInput_input{
+    font-family: $sans;
+    font-size: 14px;
+    padding: 2px 5px;
+    text-align: center;
+    width: calc(100% - 10px);
+  }
+  .CalendarMonth_caption{
+    font-size: 16px;
+  }
+  .CalendarDay_button{
+    font-size: 12px;
+  }
+  .DayPickerNavigation_leftButton__horizontal{
+    left:5px;
+  }
+  .DayPickerNavigation_rightButton__horizontal{
+    right:5px;
+  }
+  .DayPickerNavigation_button__horizontal {
+      border-radius: 3px;
+      padding: 2px 3px;
+      top: 21px;
+      position: absolute;
+  }
+  .DateRangePicker_picker__openDown{
+    top: 88px;
+  }
+
+}

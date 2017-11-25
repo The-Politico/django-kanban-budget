@@ -1,0 +1,180 @@
+@import 'reactdatetime';
+
+.edit-form{
+  padding: 30px 40px;
+  font-family: $sans;
+
+  label{
+    font-size: 12px;
+    font-weight: bold;
+    display:block;
+  }
+  input{
+    font-size: 14px;
+    border: none;
+    width: calc(100% - 20px);
+    padding: 2px 10px;
+    border-bottom: 1px solid lightgrey;
+    &:focus, &:active{
+      outline: none;
+    }
+  }
+  .input-group{
+    margin-bottom: 15px;
+    &.third{
+      width: calc(33.3333% - 10px);
+      float: left;
+      padding:0 10px 0 0;
+    }
+    &.alert{
+      padding: 2px 10px 10px;
+      background: #C8E6C9;
+    }
+  }
+  .half{
+    width: calc(50% - 20px);
+    float: left;
+    padding: 0 20px 0 0;
+    .input-group{
+      margin-bottom: 10px;
+    }
+  }
+
+  .two-thirds{
+    width: 75%;
+  }
+
+  input[name='name']{
+    width: calc(100% - 40px);
+    font-size: 20px;
+  }
+  input[name='run_date']{
+    width: 140px;
+  }
+
+  textarea[name='description']{
+    width: calc(100% - 40px);
+    max-width: calc(100% - 40px);
+    border: 1px solid lightgrey;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 10px;
+    height: 60px;
+    max-height: 60px;
+    margin-bottom: -8px;
+    font-family: $sans;
+    &:focus, &:active{
+      outline: none;
+    }
+  }
+
+  .clearfix{
+    @include clearfix;
+  }
+
+  hr{
+    margin: 25px 10px;
+    height: 1px;
+    color: #ddd;
+    background-color: #ddd;
+    border: none;
+  }
+
+  .button-group{
+    margin-bottom: 10px;
+    button{
+      font-size: 14px;
+      border-radius: 2px;
+      background-color: white;
+      color: lightgrey;
+      border: 1px solid lightgrey;
+      margin-right: 4px;
+      cursor: pointer;
+      transition: all .2s;
+      &.active{
+        color: #333;
+        @include box_shadow(2);
+      }
+      &:hover{
+        color: #333;
+      }
+      &:focus, &:active{
+        outline: none;
+      }
+    }
+  }
+
+  .preview-opts{
+    text-align: right;
+    margin-right: 18px;
+    button{
+      font-size: 14px;
+      border-radius: 0;
+      padding: 0 5px;
+      background-color: white;
+      border: 1px solid lightgrey;
+      cursor: pointer;
+      color: lightgrey;
+      &.active, &.active:hover{
+        color: #333;
+      }
+      &:focus, &:active{
+        outline: none;
+      }
+      &:hover{
+        background-color: lightgrey;
+        color: grey;
+      }
+    }
+  }
+  .description-preview{
+    padding: 10px;
+    height: 60px;
+    width: calc(100% - 40px);
+    border: 1px solid lightgrey;
+    font-size: 14px;
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: -3px;
+    font-family: $sans;
+    p{ margin: 0; }
+  }
+
+  li.rw-multiselect-tag {
+    margin: 2px;
+  }
+
+  .people li.rw-multiselect-tag {
+    span{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 110px;
+      max-width: 110px;
+      text-align: left;
+    }
+  }
+
+  button.create-button{
+    border-radius: 50px;
+    margin-top: 5px;
+    padding: 5px 22px;
+    text-align: right;
+    background-color: $budget-color;
+    border: none;
+    color:white;
+    font-size: 20px;
+    cursor:pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    &:hover{
+      box-shadow: 2px 7px 14px rgba(0,0,0,0.22), 2px 5px 5px rgba(0,0,0,0.18);
+    }
+    &[disabled]{
+      background-color: lightgrey;
+      pointer-events: none;
+    }
+    &:active, &:focus{
+      outline: none;
+    }
+  }
+}
