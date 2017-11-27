@@ -7,12 +7,8 @@ from .slugged import SluggedModel
 class Column(SluggedModel):
     """Columns represent different statuses within a workflow."""
 
-    def get_default_board():
-        return Board.objects.get_or_create(name="Pitches")[0]
-
     board = models.ForeignKey(
-        'Board',
-        default=get_default_board,
+        Board,
         on_delete=models.PROTECT,
         related_name='columns'
     )
