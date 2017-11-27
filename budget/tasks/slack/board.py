@@ -29,7 +29,6 @@ def format_developers(project):
 def build_fields(board):
     fields = []
     for column in board.columns.all().order_by('position'):
-        print('check')
         if column.projects.count() == 0:
             continue
         projects = '\n'.join([
@@ -54,7 +53,7 @@ def greeting():
     if cur_time.hour < 12:
         return '☀️ Good morning!'
     elif 12 <= cur_time.hour < 18:
-        return 'Good afternoon!'
+        return '🕶️ Good afternoon!'
     else:
         return '🌙 Good evening!'
 
