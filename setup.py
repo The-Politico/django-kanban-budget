@@ -6,10 +6,11 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-kanban-budget',
-    version='0.0.2',
+    version='0.0.3',
     packages=find_packages(exclude=('example',)),
     include_package_data=True,
     license='MIT',
+    url="https://github.com/The-Politico/django-kanban-budget",
     description='A Kanban-style project management app for developer-'
     'journalists in newsrooms. (Not about $$$.)',
     classifiers=[
