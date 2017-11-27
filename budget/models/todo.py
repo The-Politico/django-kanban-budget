@@ -1,7 +1,6 @@
+from budget.models import Project
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-
-from budget.models import Project
 
 
 class TodoManager(models.Manager):

@@ -1,12 +1,13 @@
-from celery import shared_task
-
 from budget.github import Github
 from budget.models import Todo
+from celery import shared_task
 
 
 @shared_task
 def close_issue(repo_url, issue_url):
     client = Github()
+    if not client:
+        return
     repo = client.get_repo_by_url(repo_url)
     issue = repo.get_issue_by_url(issue_url)
     if issue and issue.state == 'open':
@@ -37,6 +38,8 @@ def sync_issue(pk):
     """
     todo = Todo.objects.get(pk=pk)
     client = Github()
+    if not client:
+        return
     repo = client.get_repo_by_url(todo.project.github)
     if todo.github_url:
         issue = repo.get_issue_by_url(todo.github_url)

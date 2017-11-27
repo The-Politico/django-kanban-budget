@@ -25,7 +25,7 @@ const Status = (props) => {
             textField="name"
             valueField="slug"
             value={project.type}
-            onChange={value => this.props.patchProject({
+            onChange={value => props.patchProject({
               slug: project.slug,
               type: value.slug,
             })}
@@ -58,11 +58,11 @@ const Status = (props) => {
             valueField="slug"
             value={project.status}
             onChange={value => {
-              this.props.patchProject({
+              props.patchProject({
                 slug: project.slug,
                 status: value.slug,
               });
-              this.props.closeModal();
+              props.closeModal();
             }}
             groupBy="board"
           />
@@ -77,7 +77,7 @@ const Status = (props) => {
             data={tags}
             textField="name"
             valueField="slug"
-            onChange={value => this.props.patchProject({
+            onChange={value => props.patchProject({
               slug: project.slug,
               tags: value.map(d => d.slug),
             })}

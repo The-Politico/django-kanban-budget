@@ -38,7 +38,7 @@ class Title extends Component {
               name: 'run_date',
             }}
             value={new Date(project.run_date)}
-            dateFormat="MMM. D,"
+            dateFormat="MMM. D, YYYY"
             timeFormat="h:mm A"
             onChange={(moment) => this.props.patchProject({
               slug: project.slug,

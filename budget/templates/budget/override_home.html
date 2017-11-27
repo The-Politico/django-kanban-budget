@@ -1,0 +1,11 @@
+{% extends "budget/home.html" %}
+
+{%block intro%}
+<h1>Welcome to your budget!</h1>
+<p>
+  To start, create a budget board with some columns in <a href="{%url 'admin:budget_board_changelist'%}">the admin</a>, then create your first project cards on that budget's page.
+</p>
+<p>
+  See the <a href="https://github.com/The-Politico/django-budget" target="_blank">project documentation</a> for more configuration options.
+</p>
+{%endblock%}

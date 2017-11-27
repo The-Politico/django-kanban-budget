@@ -10,6 +10,7 @@ class TodoEdit extends Component {
     super(props);
 
     this.propsToTodo = this.propsToTodo.bind(this);
+    this.mergeStateTodos = this.mergeStateTodos.bind(this);
 
     this.addTodo = this.addTodo.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
@@ -25,21 +26,28 @@ class TodoEdit extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // Do nothing if state and props out of sync while waiting on API.
+    // If switching projects, set new todos from props.
+    if (this.props.project.slug !== nextProps.project.slug) {
+      this.setState({
+        todos: this.propsToTodo(nextProps.todos),
+      });
+      return;
+    }
+    // If a todo was deleted in props, reset.
+    if (this.props.todos.length > nextProps.todos.length) {
+      this.setState({
+        todos: this.propsToTodo(nextProps.todos),
+      });
+      return;
+    }
+    // If same project, do nothing if state and props out of sync
+    // while waiting on API...
     if (this.state.todos.length !== nextProps.todos.length) return;
-    // ... or if current and next props are the same.
+    // ... or if current and next props are the same...
     if (_.isEqual(this.props.todos, nextProps.todos)) return;
-    // Only update null ids and github URLs with info from API
-    const nextTodos = this.propsToTodo(nextProps.todos);
-    this.setState({
-      todos: nextTodos.map((d, i) => {
-        const todo = this.state.todos[i];
-        return _.assign({}, todo, {
-          id: todo.id ? todo.id : d.id,
-          github_url: todo.github_url ? todo.github_url : d.github_url,
-        });
-      }),
-    });
+    // ... otherwise, merge todos with props.
+    this.mergeStateTodos(nextProps.todos);
+    return;
   }
 
   /**
@@ -47,7 +55,7 @@ class TodoEdit extends Component {
    *
    * Sorting is important because sort order by timestamp is how
    * we match props to todos in component state when filling in
-   * missing info with response from the API.
+   * missing info with response from the API (mergeStateTodos).
    */
   propsToTodo(todos) {
     return _.sortBy(todos.map(d => ({
@@ -59,11 +67,37 @@ class TodoEdit extends Component {
     })), ['created']).reverse();
   }
 
+  /**
+   * Merge todos rendered from props with those in state.
+   *
+   * Merges ids and github_urls when complete data is sent
+   * from the server. Counts on sort order by created time to
+   * match todos in state with those rendered from props.
+   */
+  mergeStateTodos(nextTodos) {
+    const todos = this.propsToTodo(nextTodos);
+    this.setState({
+      todos: todos.map((d, i) => {
+        const todo = this.state.todos[i];
+        return _.assign({}, todo, {
+          id: todo.id ? todo.id : d.id,
+          github_url: todo.github_url ? todo.github_url : d.github_url,
+        });
+      }),
+    });
+  }
+
   updateTodo(index, todo) {
     const todos = this.state.todos.slice();
     const updatedTodo = _.assign({}, todos[index], todo);
     todos.splice(index, 1, updatedTodo);
     this.setState({ todos }, () => {
+      // If a todo doesn't have an ID, we're waiting on it from
+      // the server and don't want to dispatch a second POST
+      // request which will create a duplicate todo. (In theory,
+      // a todo could get out of sync with server if last update
+      // happens before the server returns an ID.)
+      if (!updatedTodo.id) return;
       this.dispatch(_.assign({}, updatedTodo));
     });
   }

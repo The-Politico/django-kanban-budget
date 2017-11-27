@@ -6,12 +6,11 @@
 {%endblock%}
 
 {%block head%}
-<link rel="stylesheet" href="{%static 'budget/css/main.css'%}">
-<link rel="stylesheet" href="{%static 'budget/css/home.css'%}">
+<link rel="stylesheet" href="{%static 'budget/css/main-board-list.css'%}">
 {%endblock%}
 
 {%block foot%}
-<script type="text/javascript" src="{%static 'budget/js/main-project-list.bundle.js'%}"></script>
+<script type="text/javascript" src="{%static 'budget/js/main-board-list.js'%}"></script>
 {%endblock%}
 
 {%block breadcrumb%}
@@ -22,43 +21,25 @@
 {%endblock%}
 
 {%block content%}
+<section class="intro">
+{%block intro%}{%endblock%}
+</section>
 <section class="main-boards">
-<h1>Interactive News Budget</h1>
+<h2>Budgets</h2>
 <div class="boards clearfix">
-{%for board in main_boards%}
+{%for board in boards%}
+<a href="{%url 'budget-boards-detail' board.slug%}">
 <div class="board">
-  <a href="{%url 'budget-boards-detail' board.slug%}">
-    <i class="{{board.icon}}"></i>{{board.name}}<sup>{{board.project_count}}</sup>
-  </a>
+  <h4>{{board.name}}</h4>
+  <div class="description">
+    {{board.description|render_markdown|safe}}
+  </div>
+  <div class="stats">{{board.project_count}} projects</div>
 </div>
+</a>
 {%endfor%}
 </div>
 </section>
 
-<section class="links">
-{% if request.user.is_superuser %}
-  <a href="{%url 'budget-projects-create'%}">
-    <button>Create a project</button>
-  </a>
-{% else %}
-  <a href="{%url 'budget-projects-pitch'%}">
-    <button>Pitch a project</button>
-  </a>
-{% endif %}
-
-<section class="project-boards">
-  {%if project_boards%}<h3>Project Budgets</h3>{%endif%}
-
-  <div class="boards">
-  {%for board in project_boards%}
-    <div class="board">
-      <h4><a href="{%url 'budget-boards-detail' board.slug%}">{{board.name}}<sup>{{board.project_count}}</sup></a></h4>
-      <p>{%if board.description%}{{board.description}}{%endif%}</p>
-    </div>
-  {%endfor%}
-  </div>
-</section>
-
-</section>
 
 {%endblock%}

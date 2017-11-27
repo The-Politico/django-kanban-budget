@@ -1,54 +1,27 @@
 @import 'fonts';
 @import 'colors';
 @import 'mixins';
-@import 'breadcrumb';
-@import 'todo';
-@import 'draftjs';
-@import 'note';
-@import 'apistatus';
-@import 'project/archive-confirm';
-@import 'project/todoedit';
+
+@import 'board/note';
+@import 'board/apistatus';
+@import 'board/filters';
 @import 'project/projectedit';
 @import 'board/topbuttons';
-@import 'board/filters';
+@import 'project/todo';
+@import 'project/archive-confirm';
+@import 'project/todoedit';
 
-$boxshadow: 0 1px 6px rgba(0,0,0,0.16), 2px 3px 6px rgba(0,0,0,0.23);
-
-
-body{
-  background: #f7f8f8;
-}
-
-body article.container{
-  max-width: 100%;
-  width: auto;
-  margin: 0;
-  padding: 0;
-  overflow-y: hidden;
-  height: calc(100vh - 95px);
-  box-shadow:
-        inset 0px 12px 8px -10px #CCC,
-        inset 0px -12px 8px -10px #CCC;
-  & > h2{
-    margin-top:0;
-  }
-}
-
-.breadcrumb{
-  margin-bottom: 0;
-}
 
 .board{
   width:100%;
-  height: calc(100vh - 125px);
-  overflow-x: scroll;
+  height: calc(100vh - 100px);
   overflow-y: hidden;
   white-space: nowrap;
   padding: 0 20px;
 
   .column{
     width: 300px;
-    height: calc(100vh - 135px);
+    height: calc(100vh - 110px);
     white-space: normal;
     display: inline-block;
     overflow: hidden;
@@ -62,7 +35,7 @@ body article.container{
     }
 
     .column-inner-well{
-      max-height: calc(100vh - 155px);
+      max-height: calc(100vh - 140px);
       overflow-y: scroll;
       &::-webkit-scrollbar {
         display:none;
@@ -83,11 +56,11 @@ body article.container{
     .project{
 
       @import 'project/links';
+      @include box_shadow(2);
 
       margin: 10px 5px 20px 0;
       padding: 10px 30px 20px 20px;
       background-color: white;
-      box-shadow: $boxshadow;
       position: relative;
       border-left: 1px solid #eee;
 
@@ -127,6 +100,8 @@ body article.container{
         margin-bottom: 2px;
       }
       .description{
+        overflow-x: hidden;
+        text-overflow: ellipsis;
         p{
           font-size: 14px;
           line-height: 18px;
@@ -252,83 +227,5 @@ body article.container{
 
     }
 
-  }
-}
-
-.notes{
-  background-color: white;
-  background: url(../images/grid.png) repeat-x;
-  background-attachment: fixed;
-  box-shadow: inset 0 0 4px rgba(0,0,0,0.15);
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-}
-.notes-content{
-  position:relative;
-  padding: 10px 50px 20px 30px;
-  height: 100%;
-  overflow-y: scroll;
-  font-family: monospace;
-
-  h4.project-title{
-    margin: 0 0 10px;
-    color: grey;
-    font-style: italic;
-  }
-
-  input[type='checkbox']{
-    margin: 0;
-  }
-  input[type=checkbox] { display:none; }
-  input[type=checkbox] + label:before {
-    font-family: FontAwesome;
-    display: inline-block;
-  }
-  input[type=checkbox] + label:before {
-    content: "\f096";
-  }
-  input[type=checkbox] + label:before {
-    letter-spacing: 10px;
-  }
-
-  input[type=checkbox]:checked + label:before {
-    content: "\f046";
-  }
-  input[type=checkbox]:checked + label:before {
-    letter-spacing: 5px;
-  }
-  input[type=checkbox] + label{
-    pointer-events: none;
-  }
-
-
-  i.fa-times{
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 26px;
-    color: lightgrey;
-    transition: all .2s;
-    cursor: pointer;
-    &:hover{
-      color: grey;
-    }
-  }
-}
-
-button.nav-button{
-  top: 13px;
-  right: 10px;
-  border:none;
-  border-radius: 20px;
-  background: transparent;
-  color: white;
-  padding: 5px 10px;
-  position: fixed;
-  font-weight: bold;
-  opacity: 0.4;
-  transition: all .2s;
-  &:hover{
-    opacity:1;
   }
 }

@@ -37,7 +37,7 @@ class Create extends Component {
       status: this.state.status,
     });
     setTimeout(() => {
-      this.closeModal();
+      this.props.closeModal();
       this.setState({ sending: false });
     }, 1000);
   }

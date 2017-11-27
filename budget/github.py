@@ -47,7 +47,7 @@ class Github(object):
         org=getattr(settings, 'BUDGET_GITHUB_ORG', None)
     ):
         if not token:
-            return
+            return None
         self.TOKEN = token
         self.PERSON = person
         self.ORG = org

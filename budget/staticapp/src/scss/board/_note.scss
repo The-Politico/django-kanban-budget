@@ -1,7 +1,7 @@
-$boxshadow: 0 1px 6px rgba(0,0,0,0.16), 2px 3px 6px rgba(0,0,0,0.23);
+@import 'draftjs';
 
 .ReactModal__Content{
-  box-shadow: $boxshadow;
+  @include box_shadow(2);
   position: relative;
   background-color: #fff;
 

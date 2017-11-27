@@ -6,7 +6,18 @@ body footer{
   position: absolute;
   bottom: 0;
   left: 0;
-  line-height: 30px;
-  text-align: right;
   padding: 0 20px;
+  overflow-y: hidden;
+  .footer-branding{
+    line-height: 35px;
+    font-size: 12px;
+    color: grey;
+    text-align: right;
+    img{
+      vertical-align: middle;
+      height: 20px;
+      margin-left: 4px;
+      margin-top: -5px;
+    }
+  }
 }

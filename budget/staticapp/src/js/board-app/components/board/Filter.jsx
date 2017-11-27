@@ -21,6 +21,11 @@ class Filter extends Component {
     this.state = {
       focusedInput: null,
     };
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+  }
+
+  handleClickOutside() {
+    this.props.closePanel();
   }
 
   render() {
@@ -69,20 +74,31 @@ class Filter extends Component {
       <div
         className={this.props.open ? 'open filter-panel' : 'filter-panel'}
       >
+        <div
+          className={
+            (filters.developers.length === 0 &&
+            filters.types.length === 0 &&
+            !filters.startDate && !filters.endDate)
+            || this.props.open ?
+            'filter-flag inactive' : 'filter-flag'
+        }
+        >
+          <i className="fa fa-exclamation-triangle" /> Filtered
+        </div>
         <i
           className="fa fa-times"
           onClick={this.props.closePanel}
         />
         <div>
           <button
-            className={
+            className="reset"
+            onClick={() => this.props.actions.resetFilters()}
+            disabled={
               (filters.developers.length === 0 &&
               filters.types.length === 0 &&
-              !filters.startDate && !filters.endDate) ?
-              'reset' : 'reset active'
+              !filters.startDate && !filters.endDate)
             }
-            onClick={() => this.props.actions.resetFilters()}
-          >Reset filters</button>
+          ><i className="fa fa-refresh" /> Reset</button>
         </div>
         <h4>Developers</h4>
         <div className="filter-options">
@@ -102,6 +118,7 @@ class Filter extends Component {
             focusedInput={this.state.focusedInput}
             onFocusChange={focusedInput => this.setState({ focusedInput })}
             daySize={22}
+            showClearDates
           />
         </div>
       </div>

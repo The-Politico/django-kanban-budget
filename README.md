@@ -21,7 +21,7 @@ class Profile(models.Model):
   # ... etc.
 ```
 
-You could set the reporter attribute in your settings like this:
+You could set the reporter attribute in your project settings like this:
 
 ```python
 BUDGET_REPORTER_ATTR = 'profile.is_reporter'
@@ -33,4 +33,27 @@ Here are the defaults:
 BUDGET_REPORTER_ATTR = 'is_staff'
 BUDGET_EDITOR_ATTR = 'is_staff'
 BUDGET_DEVELOPER_ATTR = 'is_superuser'
+```
+
+### Setting up Slack notifications
+
+You can configure periodic notifications to Slack from your budget boards.
+
+First add some configuration variables to your project settings:
+
+```python
+BUDGET_SLACK_TOKEN = os.getenv('BUDGET_SLACK_TOKEN')  # A Slack API token
+BUDGET_DOMAIN = 'http://localhost:8000'  # The root domain of your hosted app
+```
+
+For each board you want to send the status of, add a Slack channel slug to the model.
+
+```python
+a_board.slack_channel = '#my-channel'
+```
+
+Then configure a process on your server to call the Slack notification management command with the slugs of any board you want to send the status of:
+
+```
+$ python manage.py budget_board_status slug-of-a-board another-board
 ```

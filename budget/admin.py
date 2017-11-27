@@ -12,15 +12,6 @@ class TypeAdmin(admin.ModelAdmin):
     ]
 
 
-class ColumnAdmin(admin.ModelAdmin):
-    list_display = [
-        'name',
-        'board',
-        'position',
-    ]
-    ordering = ('position',)
-
-
 class ColumnInlineAdmin(admin.TabularInline):
     model = Column
     extra = 0
@@ -53,5 +44,4 @@ admin.site.register(Project, ProjectAdmin)
 admin.site.register(Tag)
 admin.site.register(Todo)
 admin.site.register(Type, TypeAdmin)
-admin.site.register(Column, ColumnAdmin)
 admin.site.register(Board, BoardAdmin)

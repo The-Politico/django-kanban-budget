@@ -4,21 +4,21 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta charset="utf-8">
-        {%block title%}<title>POLITICO Interactives</title>{%endblock%}
+        {%block title%}<title>django-budget</title>{%endblock%}
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         {%block head%}{%endblock%}
     </head>
     <body>
     {%block body%}
       {%block nav%}
-      <nav title="navigation">
+        <nav title="navigation">
           <div id="global-header">
             <h1>django-budget</h1>
           </div>
           <div class="clear"></div>
           {%block breadcrumb%}{%endblock%}
-     </nav>
-     {%endblock nav%}
+        </nav>
+       {%endblock nav%}
 
 
 
@@ -30,8 +30,8 @@
      <footer>
        <div id="global-footer">
          <div class="footer-branding">
+           Open source by
            <img
-            style="height: 20px; margin-top: 6px;"
             src="https://rawgithub.com/The-Politico/src/master/images/logo/badge.png"
           />
          </a>

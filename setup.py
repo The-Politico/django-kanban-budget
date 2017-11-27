@@ -30,5 +30,7 @@ setup(
         'django-uuslug',
         'celery',
         'markdown',
+        'PyGithub',
+        'slacker',
     ]
 )

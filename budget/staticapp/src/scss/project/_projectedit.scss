@@ -49,7 +49,7 @@
     font-size: 20px;
   }
   input[name='run_date']{
-    width: 140px;
+    width: 160px;
   }
 
   textarea[name='description']{
@@ -124,6 +124,9 @@
       &:hover{
         background-color: lightgrey;
         color: grey;
+      }
+      &:nth-child(2){
+        margin-left: -1px;
       }
     }
   }

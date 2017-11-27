@@ -1,8 +1,12 @@
 @import 'mixins';
 @import 'colors';
 @import 'fonts';
+
+
 @import 'nav';
+@import 'breadcrumb';
 @import 'footer';
+
 
 body{
   font-family: $sans;
@@ -10,6 +14,7 @@ body{
   padding: 0 0 30px;
   height: calc(100vh - 30px);
   position: relative;
+  background: #f7f8f8;
 
   h1, h2, h3, h4{
     letter-spacing: 0;
@@ -18,4 +23,24 @@ body{
     font-family:$sans;
     text-transform: none;
   }
+
+  article.container{
+    max-width: 100%;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    padding-right: 30px;
+    overflow: hidden;
+    height: calc(100vh - 95px);
+    box-shadow:
+          inset 0px 12px 8px -10px #CCC,
+          inset 0px -12px 8px -10px #CCC;
+    & > h2{
+      margin-top:0;
+    }
+  }
+}
+
+.clearfix {
+  @include clearfix();
 }

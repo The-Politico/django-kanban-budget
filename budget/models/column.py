@@ -1,6 +1,5 @@
-from django.db import models
-
 from budget.models import Board
+from django.db import models
 
 from .slugged import SluggedModel
 
@@ -14,7 +13,8 @@ class Column(SluggedModel):
     board = models.ForeignKey(
         'Board',
         default=get_default_board,
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
+        related_name='columns'
     )
     position = models.PositiveSmallIntegerField(
         default=0,
@@ -23,7 +23,7 @@ class Column(SluggedModel):
 
     @property
     def project_count(self):
-        return self.project_set.filter(archive=False).count()
+        return self.projects.filter(archive=False).count()
 
     def __str__(self): # noqa
         return '{} - {}'.format(self.board.name, self.name)

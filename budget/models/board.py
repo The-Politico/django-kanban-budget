@@ -18,9 +18,15 @@ board on homepage.")
 
     description = models.CharField(blank=True, null=True, max_length=250)
 
+    slack_channel = models.CharField(
+        blank=True, null=True,
+        max_length=250,
+        help_text="A channel to notify with activity, e.g., #my-channel."
+    )
+
     @property
     def project_count(self):
-        return sum([b.project_count for b in self.column_set.all()])
+        return sum([b.project_count for b in self.columns.all()])
 
     class Meta:
         ordering = ['position']

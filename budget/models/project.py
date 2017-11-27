@@ -53,31 +53,35 @@ class Project(models.Model):
 
     reporters = models.ManyToManyField(
         User,
-        blank=True, null=True,
+        blank=True,
         related_name='reporters'
     )
     editors = models.ManyToManyField(
         User,
-        blank=True, null=True,
+        blank=True,
         related_name='editors'
     )
     developers = models.ManyToManyField(
         User,
-        blank=True, null=True,
+        blank=True,
         related_name='developers'
     )
 
     status = models.ForeignKey(
         'Column',
         default=get_default_column,
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
+        related_name='projects'
     )
 
     type = models.ForeignKey(
-        'Type', blank=True, null=True, on_delete=models.SET_NULL)
+        'Type', blank=True, null=True, on_delete=models.SET_NULL
+    )
 
     tags = models.ManyToManyField(
-        'Tag', blank=True, null=True, related_name='tags')
+        'Tag', blank=True,
+        related_name='tags'
+    )
 
     position = models.PositiveSmallIntegerField(
         default=0,

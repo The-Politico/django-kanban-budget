@@ -26,7 +26,7 @@
       padding: 0 5px;
       text-overflow: ellipsis;
       &:active, &:focus, &:hover{
-        background-color: #ddd;
+        border-bottom: 1px solid grey;
         outline: none;
       }
     }
