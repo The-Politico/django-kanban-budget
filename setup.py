@@ -5,11 +5,11 @@ from setuptools import find_packages, setup
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='django-budget',
+    name='django-kanban-budget',
     version='0.0.1',
     packages=find_packages(exclude=('example',)),
     include_package_data=True,
-    license='',
+    license='MIT',
     description='A Kanban-style project management app for developer-'
     'journalists in newsrooms with Github and Slack integrations.'
     ' (Not about $$$.)',
@@ -17,6 +17,7 @@ setup(
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
