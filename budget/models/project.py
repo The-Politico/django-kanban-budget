@@ -1,19 +1,11 @@
 from budget.github import Github
-from budget.models import Column
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 from django.db import models
 from uuslug import uuslug
 
 
 class Project(models.Model):
     """Projects are kanban cards. The atomic unit of our workflow."""
-
-    def get_default_column():
-        return Column.objects.get_or_create(name='Pitched')[0]
-
-    def get_absolute_url(self):
-        return reverse('budget-projects-edit', kwargs={'slug': self.slug})
 
     def get_repo(self):
         if self.github:
@@ -69,7 +61,6 @@ class Project(models.Model):
 
     status = models.ForeignKey(
         'Column',
-        default=get_default_column,
         on_delete=models.PROTECT,
         related_name='projects'
     )
