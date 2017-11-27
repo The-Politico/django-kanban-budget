@@ -38,7 +38,7 @@ module.exports = {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: ['postcss-loader', 'css-loader'],
+          use: ['css-loader'],
         }),
       },
     ],
@@ -54,9 +54,8 @@ module.exports = {
       sourceMap: true,
     }),
     new ExtractTextPlugin({
-      filename:  (getPath) => {
-        return getPath('css/[name].css').replace('css/js', 'css');
-      },
+      filename: (getPath) =>
+        getPath('css/[name].css').replace('css/js', 'css'),
       allChunks: true,
     }),
     new OptimizeCssAssetsPlugin(),

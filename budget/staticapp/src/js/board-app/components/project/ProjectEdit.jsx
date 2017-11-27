@@ -46,7 +46,8 @@ class ProjectEdit extends Component {
         style={{
           content: {
             width: '700px',
-            height: '90%',
+            height: 'auto',
+            maxHeight: '90%',
             left: 'calc(50% - 350px)',
             top: '5%',
             padding: '0',

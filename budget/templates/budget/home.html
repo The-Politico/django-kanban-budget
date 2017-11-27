@@ -2,9 +2,6 @@
 {%load staticfiles%}
 {%load markdown_tags%}
 
-{%block dependency_styles%}
-{%endblock%}
-
 {%block head%}
 <link rel="stylesheet" href="{%static 'budget/css/main-board-list.css'%}">
 {%endblock%}
@@ -15,7 +12,9 @@
 
 {%block breadcrumb%}
 <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item">
+      {%block breadcrumb_home%}<a href="/"><i class="fa fa-home" aria-hidden="true"></i></a>{%endblock%}
+    </li>
     <li class="breadcrumb-item active">Budget</li>
 </ol>
 {%endblock%}

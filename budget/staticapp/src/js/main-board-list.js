@@ -1,5 +1,4 @@
 import Masonry from 'masonry-layout';
-import '../scss/main.scss';
 import '../scss/home.scss';
 
 

@@ -1,6 +1,6 @@
 const { exec } = require('child_process');
 const { argv } = require('yargs');
-const app = require('../server/server.js');
+const app = require('../server/server');
 
 const port = argv.port || 3000;
 const proxy = argv.proxy || 8000;

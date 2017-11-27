@@ -25,27 +25,39 @@ class TodoEdit extends Component {
     };
   }
 
+  /**
+   * Handles syncing props and state for todos.
+   *
+   * Todos are created without an id or github_url in state and sent in a
+   * POST to the server. The server returns the created todo with an id
+   * and github_url, which also adds the todo to props. This component
+   * then merges new props (with the additional data from server) with
+   * todos in state.
+   *
+   * This method determines whether to merge props and state, create new
+   * state from props, or do nothing.
+   */
   componentWillReceiveProps(nextProps) {
-    // If switching projects, set new todos from props.
-    if (this.props.project.slug !== nextProps.project.slug) {
-      this.setState({
-        todos: this.propsToTodo(nextProps.todos),
-      });
+    // CREATE NEW STATE FROM PROPS
+    if (
+      // ... when switching projects.
+      (this.props.project.slug !== nextProps.project.slug) ||
+      // ... when a todo was deleted from the card.
+      (this.props.todos.length > nextProps.todos.length)
+    ) {
+      this.setState({ todos: this.propsToTodo(nextProps.todos) });
       return;
     }
-    // If a todo was deleted in props, reset.
-    if (this.props.todos.length > nextProps.todos.length) {
-      this.setState({
-        todos: this.propsToTodo(nextProps.todos),
-      });
-      return;
-    }
-    // If same project, do nothing if state and props out of sync
-    // while waiting on API...
-    if (this.state.todos.length !== nextProps.todos.length) return;
-    // ... or if current and next props are the same...
-    if (_.isEqual(this.props.todos, nextProps.todos)) return;
-    // ... otherwise, merge todos with props.
+    // DO NOTHING
+    if (
+      // ... when state and props have different todo lengths while waiting
+      // on a response from the server to create the new todo in props.
+      (this.state.todos.length !== nextProps.todos.length) ||
+      // ... when props are the same
+      _.isEqual(this.props.todos, nextProps.todos)
+    ) return;
+    // MERGE PROPS AND STATE
+    // ... whenever else.
     this.mergeStateTodos(nextProps.todos);
     return;
   }
@@ -96,7 +108,9 @@ class TodoEdit extends Component {
       // the server and don't want to dispatch a second POST
       // request which will create a duplicate todo. (In theory,
       // a todo could get out of sync with server if last update
-      // happens before the server returns an ID.)
+      // happens before the server returns an ID, though this is
+      // less likely with a throttled dispatch func. Still considering
+      // a timeout func here...)
       if (!updatedTodo.id) return;
       this.dispatch(_.assign({}, updatedTodo));
     });

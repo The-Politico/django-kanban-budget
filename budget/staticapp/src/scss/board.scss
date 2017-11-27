@@ -1,6 +1,4 @@
-@import 'fonts';
-@import 'colors';
-@import 'mixins';
+@import 'main';
 
 @import 'board/note';
 @import 'board/apistatus';
@@ -10,6 +8,7 @@
 @import 'project/todo';
 @import 'project/archive-confirm';
 @import 'project/todoedit';
+
 
 
 .board{
