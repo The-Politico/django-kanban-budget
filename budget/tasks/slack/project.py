@@ -36,7 +36,7 @@ def new_project(pk):
             'value': project.description,
             'short': False
         }],
-        'footer': 'django-budget',
+        'footer': 'django-kanban-budget',
         'ts': int(time.time())
     }]
 
@@ -45,5 +45,5 @@ def new_project(pk):
         '',
         attachments=attachment_data,
         as_user=False,
-        username='django-budget'
+        username='django-kanban-budget'
     )

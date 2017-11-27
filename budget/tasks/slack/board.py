@@ -80,7 +80,7 @@ def board_status(pk):
     )
     attachment_data = [{
         'fallback': 'Whoops! Something went wrong with this message.',
-        'author_name': 'django-budget',
+        'author_name': 'django-kanban-budget',
         'author_link': budget_url,
         'color': '#6DA9CC',
         'pretext': '{} Here\'s what we\'re working on:'.format(greeting()),
@@ -95,5 +95,5 @@ def board_status(pk):
         '',
         attachments=attachment_data,
         as_user=False,
-        username='django-budget'
+        username='django-kanban-budget'
     )

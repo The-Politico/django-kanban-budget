@@ -11,8 +11,7 @@ setup(
     include_package_data=True,
     license='MIT',
     description='A Kanban-style project management app for developer-'
-    'journalists in newsrooms with Github and Slack integrations.'
-    ' (Not about $$$.)',
+    'journalists in newsrooms. (Not about $$$.)',
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
