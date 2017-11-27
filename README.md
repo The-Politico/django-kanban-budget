@@ -2,11 +2,65 @@
 
 # django-kanban-budget
 
-TK.
+A Kanban-style project management app for developer-journalists in newsrooms.
+
+### Budget?
+
+In newsroom-speak, "budget" refers to the stories to be published and the space and pages allotted to them in the next day's paper. It has nothing to do with $$$.
+
+### Quickstart
+
+1. Install the app.
+
+  ```
+  $ pip install django-kanban-budget
+  ```
+
+2. Add the app and dependencies to `INSTALLED_APPS` in your project settings.
+
+  ```python
+  # settings.py
+
+  INSTALLED_APPS = [
+      # ...
+      'rest_framework',
+      'django_filters',
+      'budget',
+  ]
+  ```
+3. Add additional configuration settings.
+
+  ```python
+  # settings.py
+
+  BUDGET_SECRET_TOKEN = 'SECRETTOKEN' # An arbitrary token
+  BUDGET_DOMAIN = 'http://localhost:8000' # The root domain of your hosted project
+  ```
+
+4. Add to project urls
+
+  ```python
+  # urls.py
+
+  urlpatterns = [
+      url(r'^admin/', admin.site.urls),
+      # ...
+      url(r'^budget/', include('budget.urls')),
+  ]
+  ```
+
+5. Run migrations.
+
+  ```
+  $ python manage.py migrate budget
+  ```
+
+6. Go!
+
 
 ### Configuring users
 
-django-budget uses Django's standard `User` auth model to associate people with projects. You can, however, set custom roles to determine who is a developer, editor or reporter in your system.
+django-kanban-budget uses Django's standard `User` auth model to associate people with projects. You can, however, set custom roles to determine who is a developer, editor or reporter in your system.
 
 Set custom attribute calls on the user model in your settings. The attributes should return a boolean value that determines that user's available roles.
 
@@ -35,9 +89,32 @@ BUDGET_EDITOR_ATTR = 'is_staff'
 BUDGET_DEVELOPER_ATTR = 'is_superuser'
 ```
 
+### Setting up GitHub integration
+
+django-kanban-budget can create a link between a GitHub repo and a project to sync issues on the repo with TODOs in the app. Just add the root HTTP URL for the repo as the GitHub link on your project card. For example, `https://github.com/The-Politico/django-kanban-budget`.
+
+Once you associate a GitHub repo with a project, the app will intercept any new issues on the repo and create a corresponding TODO in the app. Vice versa, if you create a new TODO in the app, it will create a corresponding issue on the repo. Closing an issue will delete a TODO, and deleting a TODO will close an issue, etc.
+
+To use this integration, you'll need to configure a GitHub webhook. Be sure to checkout the GitHub [docs on that](https://developer.github.com/webhooks/) for a detailed intro. Once you get the basic idea, here's how to setup the integration with the app:
+
+1. Create a webhook from the settings page of your org or personal GitHub account.
+2. Configure the Payload URL to hit the app's webhook endpoint.
+  ```
+  https://<your app domain>/budget/webhook/github/
+  ```
+3. Make sure the `Content type` is set to `application/json`.
+4. For security, use the `BUDGET_SECRET_TOKEN` you set in your project settings as the `Secret` key for the webhook.
+5. We recommend you select individual events to trigger your webhook. Make sure you at least select the `Issues` events.
+6. Now set the required configuration in your project settings.
+  ```python
+  BUDGET_GITHUB_ORG = 'An-Org' # Either an org or person required
+  BUDGET_GITHUB_PERSON = 'A-User'
+  BUDGET_GITHUB_TOKEN = os.getenv('BUDGET_GITHUB_TOKEN') # A GitHub user API token
+  ```
+
 ### Setting up Slack notifications
 
-You can configure periodic notifications to Slack from your budget boards.
+You can configure Slack notifications from your budget boards.
 
 First add some configuration variables to your project settings:
 
@@ -46,13 +123,15 @@ BUDGET_SLACK_TOKEN = os.getenv('BUDGET_SLACK_TOKEN')  # A Slack API token
 BUDGET_DOMAIN = 'http://localhost:8000'  # The root domain of your hosted app
 ```
 
-For each board you want to send the status of, add a Slack channel slug to the model.
+For each board you want to send the status of, add a Slack channel slug to the model. (Do it in the admin!)
 
 ```python
 a_board.slack_channel = '#my-channel'
 ```
 
-Then configure a process on your server to call the Slack notification management command with the slugs of any board you want to send the status of:
+Now the app will send a notification to the designated Slack channel whenever a new project is created.
+
+To periodically send a notification that lists all the projects on a board, configure a process on your server to call the Slack notification management command with the slugs of any board you want:
 
 ```
 $ python manage.py budget_board_status slug-of-a-board another-board
