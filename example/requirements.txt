@@ -6,7 +6,7 @@ certifi==2017.11.5
 chardet==3.0.4
 decorator==4.1.2
 Django==1.11.7
--e git+git@github.com:The-Politico/django-budget.git@84ab9661f697e16a37e115ad6287555516e0f161#egg=django_budget
+-e git+git@github.com:The-Politico/django-budget.git@8a19e4b1f33fc0f66f51d5deb464006f8c584731#egg=django_budget
 django-filter==1.1.0
 django-uuslug==1.1.8
 djangorestframework==3.7.3
