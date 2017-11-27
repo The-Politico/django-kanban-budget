@@ -10,7 +10,9 @@ setup(
     packages=find_packages(exclude=('example',)),
     include_package_data=True,
     license='',
-    description='It\'s the budget.',
+    description='A Kanban-style project management app for developer-'
+    'journalists in newsrooms with Github and Slack integrations.'
+    ' (Not about $$$.)',
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
