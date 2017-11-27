@@ -6,7 +6,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-kanban-budget',
-    version='0.0.4',
+    version='0.0.5',
     packages=find_packages(exclude=('example',)),
     include_package_data=True,
     license='MIT',
