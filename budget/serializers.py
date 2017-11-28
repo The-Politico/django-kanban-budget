@@ -130,7 +130,8 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
     type = serializers.SlugRelatedField(
         slug_field='slug',
         required=False,
-        queryset=Type.objects.all()
+        queryset=Type.objects.all(),
+        allow_null=True
     )
     todos = TodoSerializer(many=True, read_only=True)
 
