@@ -78,8 +78,8 @@ def board_status(pk):
         reverse('budget-boards')[1:]
     )
     attachment_data = [{
-        'fallback': 'Whoops! Something went wrong with this message.',
-        'author_name': 'django-kanban-budget',
+        'fallback': '{} Here\'s what we\'re working on:'.format(greeting()),
+        'author_name': 'The Budget',
         'author_link': budget_url,
         'color': '#6DA9CC',
         'pretext': '{} Here\'s what we\'re working on:'.format(greeting()),
@@ -87,6 +87,7 @@ def board_status(pk):
         'title': board.name,
         'title_link': board_url,
         'fields': build_fields(board),
+        'footer': 'django-kanban-budget',
         'ts': int(time.time())
     }]
     client.chat.post_message(
@@ -94,5 +95,5 @@ def board_status(pk):
         '',
         attachments=attachment_data,
         as_user=False,
-        username='django-kanban-budget'
+        username='The Budget'
     )

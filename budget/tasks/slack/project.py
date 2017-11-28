@@ -25,7 +25,7 @@ def new_project(pk):
     )
 
     attachment_data = [{
-        'fallback': 'Whoops! Something went wrong with this message.',
+        'fallback': '🚨 New project on the budget:',
         'color': '#6DA9CC',
         'pretext': '🚨 New project on the budget:',
         'mrkdwn_in': ['fields'],
@@ -45,5 +45,5 @@ def new_project(pk):
         '',
         attachments=attachment_data,
         as_user=False,
-        username='django-kanban-budget'
+        username='The Budget'
     )
