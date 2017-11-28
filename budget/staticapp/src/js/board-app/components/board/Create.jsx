@@ -38,7 +38,7 @@ class Create extends Component {
     });
     setTimeout(() => {
       this.props.closeModal();
-      this.setState({ sending: false });
+      this.setState(this.initialState);
     }, 1000);
   }
 

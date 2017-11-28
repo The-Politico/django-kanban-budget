@@ -188,9 +188,9 @@ class TodoEdit extends Component {
         onRequestClose={this.props.closeModal}
         style={{
           content: {
-            width: '350px',
+            width: '400px',
             height: `${height}px`,
-            left: 'calc(50% - 175px)',
+            left: 'calc(50% - 200px)',
             top: '25%',
             padding: '0',
           },

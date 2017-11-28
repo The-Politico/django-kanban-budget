@@ -7,6 +7,10 @@ const Status = (props) => {
   const db = props.session;
 
   const types = db.Type.all().toRefArray();
+  types.push({
+    name: '---',
+    slug: null,
+  });
   const tags = db.Tag.all().toRefArray();
   const columns = db.Column.orderBy('position').toModelArray()
     .map(c => ({
@@ -29,14 +33,17 @@ const Status = (props) => {
               slug: project.slug,
               type: value.slug,
             })}
-            itemComponent={({ item }) => (
-              <div>
-                <i
-                  className="fa fa-square"
-                  style={{ color: item.color }}
-                /> {item.name}
-              </div>
-            )}
+            itemComponent={({ item }) =>
+              item.slug ? (
+                <div>
+                  <i
+                    className="fa fa-square"
+                    style={{ color: item.color }}
+                  /> {item.name}
+                </div>
+              ) : (
+                <div>{item.name}</div>
+              )}
             valueComponent={({ item }) => {
               if (!item) return null;
               return (
