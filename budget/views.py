@@ -7,6 +7,7 @@ from django.utils.encoding import force_bytes
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from rest_framework import status
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -39,6 +40,8 @@ class BoardDetail(DetailView):
 
 
 class GithubWebhook(APIView):
+    permission_classes = (AllowAny,)
+
     def verify_request(self, request):
         """
         Verify request is from Github using secret token.
