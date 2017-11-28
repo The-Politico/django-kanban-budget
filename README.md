@@ -89,6 +89,17 @@ BUDGET_EDITOR_ATTR = 'is_staff'
 BUDGET_DEVELOPER_ATTR = 'is_superuser'
 ```
 
+### Configuring authentication
+
+The app uses the `BUDGET_SECRET_TOKEN` you set in your project settings to verify API requests to create and update projects. **It's critical, then, that you secure board pages so that token isn't sent to unauthenticated users.**
+
+By default, pages are restricted to logged-in users, but you can use any callable authentication decorator. Just set `BUDGET_AUTH_DECORATOR` in your project settings to the string module path of a valid authentication decorator. For example, to restrict the app to staff members:
+
+```python
+# settings.py
+BUDGET_AUTH_DECORATOR = "django.contrib.admin.views.decorators.staff_member_required"
+```
+
 ### Setting up GitHub integration
 
 django-kanban-budget can create a link between a GitHub repo and a project to sync issues on the repo with TODOs in the app. Just add the root HTTP URL for the repo as the GitHub link on your project card. For example, `https://github.com/The-Politico/django-kanban-budget`.
