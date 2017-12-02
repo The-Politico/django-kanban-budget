@@ -2,7 +2,9 @@
 
 # django-kanban-budget
 
-A Kanban-style project management app for to management development projects in a newsroom.
+A Kanban-style project management app to help management development projects in a newsroom.
+
+<img src="preview.png" style="max-width:600px;" />
 
 ### Budget?
 
