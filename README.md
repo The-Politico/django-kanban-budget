@@ -51,6 +51,35 @@ In newsroom-speak, "budget" refers to the stories to be published and the space 
   ]
   ```
 
+5. Configure Celery for your project (cf. [First Steps with Django](http://docs.celeryproject.org/en/latest/django/first-steps-with-django.html)).
+
+  ```python
+  # celery.py
+  import os
+
+  from celery import Celery
+  from django.conf import settings
+
+  os.environ.setdefault('DJANGO_SETTINGS_MODULE', '<your_app>.settings')
+
+  app = Celery('<your_app>')
+  app.config_from_object('django.conf:settings', namespace='CELERY')
+  app.conf.update(
+    task_serializer='json'
+  )
+  # Use synchronous tasks in local dev
+  if settings.DEBUG:
+      app.conf.update(task_always_eager=True)
+  app.autodiscover_tasks(lambda: settings.INSTALLED_APPS, related_name='celery')
+  ```
+
+  ```python
+  # __init__.py
+  from .celery import app as celery_app
+
+  __all__ = ['celery_app']
+  ```
+
 5. Run migrations.
 
   ```
