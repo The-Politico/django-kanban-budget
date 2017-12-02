@@ -4,11 +4,12 @@
 
 A Kanban-style project management app to help management development projects in a newsroom.
 
-<style type="text/css">
-img{
-  border: 1px solid lightgrey;
-}
-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+<style
+  type="text/css">
+  img{
+    border: 1px solid lightgrey;
+  }
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 </style>
 
 <img src="preview.png" width="700" />
