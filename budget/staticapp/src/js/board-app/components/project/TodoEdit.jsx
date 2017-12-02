@@ -156,12 +156,13 @@ class TodoEdit extends Component {
     const todos = this.state.todos.map((d, i) => (
       <div className="todo">
         <i
-          className="fa fa-square-o"
+          className="fa fa-square-o fa-fw"
           title="Complete/Close issue"
           onClick={() => this.removeTodo(d, i)}
         />
         <input
           type="text"
+          className={d.github_url ? 'short' : ''}
           value={d.title}
           onChange={(e) => this.updateTodo(i, {
             title: e.target.value,
@@ -180,7 +181,11 @@ class TodoEdit extends Component {
       </div>
     ));
 
-    const height = (22 * this.state.todos.length) + 100;
+    const todosContHeight = Math.min(
+      39 * this.state.todos.length,
+      39 * 8
+    );
+    const height = todosContHeight + 90;
 
     return (
       <Modal
@@ -188,10 +193,11 @@ class TodoEdit extends Component {
         onRequestClose={this.props.closeModal}
         style={{
           content: {
-            width: '400px',
+            width: '500px',
             height: `${height}px`,
-            left: 'calc(50% - 200px)',
-            top: '25%',
+            maxHeight: '60%',
+            left: 'calc(50% - 250px)',
+            top: '20%',
             padding: '0',
           },
         }}
@@ -205,7 +211,10 @@ class TodoEdit extends Component {
               <i className="fa fa-plus" /> Add
             </button>
           </h3>
-          <div className="todos">
+          <div
+            className="todos"
+            style={{ height: todosContHeight }}
+          >
             {todos}
           </div>
           <i

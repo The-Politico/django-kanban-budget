@@ -31,18 +31,18 @@ class TodoBox extends Component {
     switch (todosArr.length) {
       case 0:
         todoExtra = (
-          <span><i className="fa fa-pencil" /> Add TODOs...</span>
+          <span><i className="fa fa-pencil fa-fw" /> Add TODOs...</span>
         );
         break;
       case 1:
       case 2:
         todoExtra = (
-          <span><i className="fa fa-pencil" /> Edit...</span>
+          <span><i className="fa fa-pencil fa-fw" /> Edit...</span>
         );
         break;
       default:
         todoExtra = (
-          <span><i className="fa fa-plus-square" /> More...</span>
+          <span><i className="fa fa-plus-square fa-fw" /> More...</span>
         );
     }
 

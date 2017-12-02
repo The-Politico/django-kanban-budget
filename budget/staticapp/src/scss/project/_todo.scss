@@ -41,17 +41,19 @@
           font-weight: bold;
         }
       }
-      &:hover{
-        background-color: #eee;
-      }
       .fa{
         color: grey;
         font-size: 16px;
         cursor: pointer;
-        margin-right: 5px;
+        margin-right: 0px;
+        color: lightgrey;
         &:hover{
-          color: $google;
+          color: #333;
+          &:before{
+            content: "\f046";
+          }
         }
+
       }
     }
 

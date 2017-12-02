@@ -2,7 +2,7 @@
 
 # django-kanban-budget
 
-A Kanban-style project management app for developer-journalists in newsrooms.
+A Kanban-style project management app for to management development projects in a newsroom.
 
 ### Budget?
 
@@ -37,7 +37,7 @@ In newsroom-speak, "budget" refers to the stories to be published and the space 
   BUDGET_DOMAIN = 'http://localhost:8000' # The root domain of your hosted project
   ```
 
-4. Add to project urls
+4. Add to project urls.
 
   ```python
   # urls.py
@@ -55,7 +55,7 @@ In newsroom-speak, "budget" refers to the stories to be published and the space 
   $ python manage.py migrate budget
   ```
 
-6. Go!
+6. Create some boards and columns in the admin, and you're ready to budget!
 
 
 ### Configuring users
@@ -102,7 +102,7 @@ BUDGET_AUTH_DECORATOR = "django.contrib.admin.views.decorators.staff_member_requ
 
 ### Setting up GitHub integration
 
-django-kanban-budget can create a link between a GitHub repo and a project to sync issues on the repo with TODOs in the app. Just add the root HTTP URL for the repo as the GitHub link on your project card. For example, `https://github.com/The-Politico/django-kanban-budget`.
+django-kanban-budget can create a link between a GitHub repo and a project card, allowing you to sync issues on the repo with TODOs in the app. Just add the root HTTP URL for the repo as the GitHub link on your project card. For example, `https://github.com/The-Politico/django-kanban-budget`.
 
 Once you associate a GitHub repo with a project, the app will intercept any new issues on the repo and create a corresponding TODO in the app. Vice versa, if you create a new TODO in the app, it will create a corresponding issue on the repo. Closing an issue will delete a TODO, and deleting a TODO will close an issue, etc.
 
@@ -140,10 +140,31 @@ For each board you want to send the status of, add a Slack channel slug to the m
 a_board.slack_channel = '#my-channel'
 ```
 
-Now the app will send a notification to the designated Slack channel whenever a new project is created.
+Now the app will send a notification to the designated Slack channel whenever a new project card is created.
 
 To periodically send a notification that lists all the projects on a board, configure a process on your server to call the Slack notification management command with the slugs of any board you want:
 
 ```
 $ python manage.py budget_board_status slug-of-a-board another-board
+```
+
+### Developing
+
+Frontend assets are compiled using  [generator-politico-django](http://generator-politico-django.readthedocs.io/en/latest/).
+
+To develop, first remove built assets from the `static` directory, then run gulp form the `staticapp` directory:
+
+```
+$ rm -rf budget/static/css
+$ rm -rf budget/static/js
+$ cd budget/staticapp
+$ gulp
+```
+
+The app will automatically start Django's development server and proxy it with Webpack hot module replacement at [http://localhost:3000](http://localhost:3000).
+
+Once you're done developing, re-build your assets to the `static` directory:
+
+```
+$ gulp build
 ```

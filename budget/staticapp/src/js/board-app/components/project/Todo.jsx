@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const TodoItem = (props) => (
   <div className="todo-issue">
     <i
-      className="fa fa-square-o"
+      className="fa fa-square-o fa-fw"
       title="Complete/Close issue"
       onClick={() => {
         props.actions.apiDeleteTodo(props.todo);
