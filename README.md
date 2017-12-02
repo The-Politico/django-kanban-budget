@@ -4,7 +4,7 @@
 
 A Kanban-style project management app to help management development projects in a newsroom.
 
-<img src="preview.png" width="400" />
+<img src="preview.png" width="600" />
 
 ### Budget?
 
