@@ -2,15 +2,15 @@
 
 # django-kanban-budget
 
-A Kanban-style project management app to help management development projects in a newsroom.
+A dead simple kanban-style project management application with tiny GitHub and Slack integrations. A budget without the budget meeting.
 
 <img src="preview.png" maxWidth="700" />
 
 ### Budget?
 
-In newsroom-speak, "budget" refers to the stories to be published and the space and pages allotted to them in the next day's paper. It has nothing to do with $$$.
+In newspaper-speak, "budget" refers to a list of stories to be published in the next day's paper and the space and pages allotted to them.
 
-### Quickstart
+## Quickstart
 
 1. Install the app.
 
@@ -21,7 +21,7 @@ In newsroom-speak, "budget" refers to the stories to be published and the space 
 2. Add the app and dependencies to `INSTALLED_APPS` in your project settings.
 
   ```python
-  # settings.py
+  # project/settings.py
 
   INSTALLED_APPS = [
       # ...
@@ -33,7 +33,7 @@ In newsroom-speak, "budget" refers to the stories to be published and the space 
 3. Add additional configuration settings.
 
   ```python
-  # settings.py
+  # project/settings.py
 
   BUDGET_SECRET_TOKEN = 'SECRETTOKEN' # An arbitrary token
   BUDGET_DOMAIN = 'http://localhost:8000' # The root domain of your hosted project
@@ -42,7 +42,7 @@ In newsroom-speak, "budget" refers to the stories to be published and the space 
 4. Add to project urls.
 
   ```python
-  # urls.py
+  # project/urls.py
 
   urlpatterns = [
       url(r'^admin/', admin.site.urls),
@@ -54,7 +54,7 @@ In newsroom-speak, "budget" refers to the stories to be published and the space 
 5. Configure Celery for your project (cf. [First Steps with Django](http://docs.celeryproject.org/en/latest/django/first-steps-with-django.html)).
 
   ```python
-  # celery.py
+  # project/celery.py
   import os
 
   from celery import Celery
@@ -74,7 +74,7 @@ In newsroom-speak, "budget" refers to the stories to be published and the space 
   ```
 
   ```python
-  # __init__.py
+  # project/__init__.py
   from .celery import app as celery_app
 
   __all__ = ['celery_app']
@@ -88,14 +88,45 @@ In newsroom-speak, "budget" refers to the stories to be published and the space 
 
 6. Create some boards and columns in the admin, and you're ready to budget!
 
+## Why this?
+
+> Before you select a tool, you must first intimately understand the problem you’re trying to solve. And the best way to do that, IMHO, is to do it by hand.
+
+> *Brian Boyer, ["That one free tool"](https://npr.design/that-one-free-tool-ab585438696d)*
+
+This app was developed from a system of notecards pinned to the walls of newsroom developers' cubicles, a low-fi project management tool.
+
+So here's the problem I came to intimately understand: Newsrooms are bad at horizontal communication.
+
+The notecard system helped because it forced us to be [radically transparent](https://hbr.org/2017/10/radical-transparency-can-reduce-bias-but-only-if-its-done-right) about our own priorities. The cards were tacked up under columns with weird names like "Blue Sky" and "House on Fire" that had real meaning to our workflow and brought our peers into our decision making process.
+
+When a senior editor had a pet project, she had to recognize its place among our other priorities. If a reporter had a good idea, we made room for it together. If our own ideas didn't beat out others in the queue, we killed our darlings.
+
+Most importantly, the cards were always up, the literal backdrop to every conversation at our desks. We could skip the daily recitals in our newsroom budget meetings because, critically, we removed the notion of convening authority from the budget: Everyone was responsible for it, no longer a function of an editorial set piece.
+
+_So, why go digital?_
+
+There are several benefits:
+
+At POLITICO, we work with reporters across the country and in Europe who can't make it to our team's desks for a chat. Messaging apps like Slack have also become a principle space to share early ideas and check the status of projects. Adding dynamic filtering to project cards also lets us have many views of our boards, a simultaneous team view and personal view, among the most important.
+
+How we organize boards and columns and what the atomic-unit of a card represents has changed over time. This app supports the continuing development of those concepts.
+
+_Why this app and not Trello/Asana/waffle.io/whatever?_
+
+First off, they're all great! It's just that most had _too much stuff_. This app has just what we found we needed and nothing more. That includes some super low-functioning integrations with the two main platforms in our world, GitHub and Slack. We also like having the ability to grow or kill features at our own pace.
+
+Most importantly, owning our own project management tool lets us weave the spirit and early lessons of the notecard system it's based on into the design.
+
+
+## Additional configuration
+
 
 ### Configuring users
 
-django-kanban-budget uses Django's standard `User` auth model to associate people with projects. You can, however, set custom roles to determine who is a developer, editor or reporter in your system.
+django-kanban-budget uses Django's standard `User` auth model to associate people with projects. You can set custom roles to determine who is a developer, editor or reporter in your system.
 
-Set custom attribute calls on the user model in your settings. The attributes should return a boolean value that determines that user's available roles.
-
-This lets you extend the `User` model elsewhere in your project and use custom attributes to determine roles in the budget.
+Set custom attribute calls to the `User` model in your settings. The attributes should return a boolean value that determines that user's available roles.
 
 Say, for example, you had a model like this:
 
@@ -112,9 +143,10 @@ You could set the reporter attribute in your project settings like this:
 BUDGET_REPORTER_ATTR = 'profile.is_reporter'
 ```
 
-Here are the defaults:
+By default, the app uses the `User` models `is_staff` method to determine reporters and editors and `is_superuser` to find developers:
 
 ```python
+# defaults
 BUDGET_REPORTER_ATTR = 'is_staff'
 BUDGET_EDITOR_ATTR = 'is_staff'
 BUDGET_DEVELOPER_ATTR = 'is_superuser'
@@ -179,7 +211,9 @@ To periodically send a notification that lists all the projects on a board, conf
 $ python manage.py budget_board_status slug-of-a-board another-board
 ```
 
-### Developing
+<img src="slack.png" width="300"/>
+
+## Developing
 
 Frontend assets are compiled using  [generator-politico-django](http://generator-politico-django.readthedocs.io/en/latest/).
 
