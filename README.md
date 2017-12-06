@@ -2,7 +2,7 @@
 
 # django-kanban-budget
 
-A dead simple kanban-style project management application with tiny GitHub and Slack integrations. A budget without the budget meeting.
+A dead simple kanban-style project management application with tiny GitHub and Slack integrations.
 
 <img src="preview.png" maxWidth="700" />
 
@@ -94,11 +94,9 @@ In newspaper-speak, "budget" refers to a list of stories to be published in the 
 
 > *Brian Boyer, ["That one free tool"](https://npr.design/that-one-free-tool-ab585438696d)*
 
-This app was developed from a system of notecards pinned to the walls of newsroom developers' cubicles, a low-fi project management tool.
+This app springs from a system of notecards that got me through a job running a data & dev team in a regional newsroom. The cards were tacked up, Kanban-style, to the high walls of our soviet-era cubicles, as low-fi a project management system as I could think of.
 
-So here's the problem I came to intimately understand: Newsrooms are bad at horizontal communication.
-
-The notecard system helped because it forced us to be [radically transparent](https://hbr.org/2017/10/radical-transparency-can-reduce-bias-but-only-if-its-done-right) about our own priorities. The cards were tacked up under columns with weird names like "Blue Sky" and "House on Fire" that had real meaning to our workflow and brought our peers into our decision making process.
+Their real novelty was that they forced us to be [radically transparent](https://hbr.org/2017/10/radical-transparency-can-reduce-bias-but-only-if-its-done-right) about our own priorities. The cards were tacked up under columns with weird names like "Blue Sky" and "House on Fire" that had real meaning to our workflow and exposed our peers to the breadth of our work, which was not always well understood.
 
 When a senior editor had a pet project, she had to recognize its place among our other priorities. If a reporter had a good idea, we made room for it together. If our own ideas didn't beat out others in the queue, we killed our darlings.
 
@@ -106,15 +104,15 @@ Most importantly, the cards were always up, the literal backdrop to every conver
 
 _So, why go digital?_
 
-There are several benefits:
+A few reasons:
 
-At POLITICO, we work with reporters across the country and in Europe who can't make it to our team's desks for a chat. Messaging apps like Slack have also become a principle space to share early ideas and check the status of projects. Adding dynamic filtering to project cards also lets us have many views of our boards, a simultaneous team view and personal view, among the most important.
+At POLITICO, we work with reporters across the country and in Europe who can't make it to our team's desks for a chat. Messaging apps like Slack have also become a habitual space to share early ideas and check the status of projects. Adding dynamic filtering to project cards also lets us have many views of our boards, a simultaneous team view and personal view, among the most important.
 
 How we organize boards and columns and what the atomic-unit of a card represents has changed over time. This app supports the continuing development of those concepts.
 
 _Why this app and not Trello/Asana/waffle.io/whatever?_
 
-First off, they're all great! It's just that most had _too much stuff_. This app has just what we found we needed and nothing more. That includes some super low-functioning integrations with the two main platforms in our world, GitHub and Slack. We also like having the ability to grow or kill features at our own pace.
+First off, they're all great! It's just that they all had _too much stuff_. This app has just what we found we needed and nothing more. That includes some super low-functioning integrations with the two main platforms in our world, GitHub and Slack. We also like having the ability to grow or kill features at our own pace.
 
 Most importantly, owning our own project management tool lets us weave the spirit and early lessons of the notecard system it's based on into the design.
 
@@ -211,7 +209,13 @@ To periodically send a notification that lists all the projects on a board, conf
 $ python manage.py budget_board_status slug-of-a-board another-board
 ```
 
-<img src="slack.png" width="300"/>
+<img src="slack.png" width="350"/>
+
+### Customizing the look
+
+We recommend [overriding the templates](https://docs.djangoproject.com/en/2.0/howto/overriding-templates/) `budget/override_home.html` and  `budget/override_board.html` in your Django project to change the style of the budget to better match your org.
+
+See the templates `budget/board.html` and `budget/home.html` for template blocks you can override.
 
 ## Developing
 
