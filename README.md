@@ -91,8 +91,8 @@ In newspaper-speak, "budget" refers to a list of stories to be published in the 
 ## Why this?
 
 > Before you select a tool, you must first intimately understand the problem you’re trying to solve. And the best way to do that, IMHO, is to do it by hand.
-
-> *Brian Boyer, ["That one free tool"](https://npr.design/that-one-free-tool-ab585438696d)*
+>
+> *- Brian Boyer, ["That one free tool"](https://npr.design/that-one-free-tool-ab585438696d)*
 
 This app springs from a system of notecards that got me through a job running a data & dev team in a regional newsroom. The cards were tacked up, Kanban-style, to the high walls of our soviet-era cubicles, as low-fi a project management system as I could think of.
 
