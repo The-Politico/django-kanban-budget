@@ -17,7 +17,7 @@ class TodoEdit extends Component {
     this.updateTodo = this.updateTodo.bind(this);
 
     this.dispatchTodo = this.dispatchTodo.bind(this);
-    this.dispatch = _.throttle(this.dispatchTodo, 2500);
+    this.dispatch = _.debounce(this.dispatchTodo, 2500);
 
     this.state = {
       openFullList: false,

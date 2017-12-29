@@ -3,12 +3,12 @@ import os
 import time
 
 import pytz
-
-from budget.models import Board
-from budget.tasks.slack import DOMAIN, get_client
 from celery import shared_task
 from django.conf import settings
 from django.urls import reverse
+
+from budget.models import Board
+from budget.tasks.slack import DOMAIN, get_client
 
 
 def format_developers(project):
@@ -36,7 +36,7 @@ def build_fields(board):
                 project.name,
                 format_developers(project)
             )
-            for project in column.projects.all()
+            for project in column.projects.filter(archive=False)
         ])
         fields.append({
             "title": column.name,
