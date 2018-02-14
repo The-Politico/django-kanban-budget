@@ -25,7 +25,8 @@ class TodoManager(models.Manager):
 class Todo(models.Model):
     """Todos usually represent github issues
     but they can also be made manually."""
-    project = models.ForeignKey(Project, related_name='todos')
+    project = models.ForeignKey(
+        Project, related_name='todos', on_delete=models.CASCADE)
     title = models.CharField(max_length=250)
     github_url = models.URLField(
         blank=True, null=True, unique=True, editable=False)
