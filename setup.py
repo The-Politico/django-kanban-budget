@@ -6,7 +6,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-kanban-budget',
-    version='0.1.1',
+    version='0.1.2',
     packages=find_packages(exclude=('example',)),
     include_package_data=True,
     license='MIT',
@@ -27,9 +27,9 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
     install_requires=[
-        'django',
-        'djangorestframework',
-        'django-filter',
+        'django>=2.0.0',
+        'djangorestframework>=3.7.7',
+        'django-filter>=2.0.0.dev1',
         'django-uuslug',
         'celery',
         'markdown',

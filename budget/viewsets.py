@@ -23,7 +23,7 @@ class TokenAuthedViewSet(viewsets.ModelViewSet):
 
 
 class StatusFilter(filters.FilterSet):
-    status = filters.CharFilter(name='status__slug')
+    status = filters.CharFilter(field_name='status__slug')
 
     class Meta:
         model = Project
@@ -31,7 +31,7 @@ class StatusFilter(filters.FilterSet):
 
 
 class BoardFilter(filters.FilterSet):
-    board = filters.CharFilter(name='board__slug')
+    board = filters.CharFilter(field_name='board__slug')
 
     class Meta:
         model = Column

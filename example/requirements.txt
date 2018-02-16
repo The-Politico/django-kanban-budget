@@ -7,9 +7,9 @@ chardet==3.0.4
 decorator==4.1.2
 Django==2.0.2
 -e ./..
-django-filter==1.1.0
+django-filter==2.0.0.dev1
 django-uuslug==1.1.8
-djangorestframework==3.7.3
+djangorestframework==3.7.7
 idna==2.6
 ipython==6.2.1
 ipython-genutils==0.2.0
