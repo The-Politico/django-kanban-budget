@@ -1,0 +1,23 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+ipython = "*"
+
+[packages]
+celery = "*"
+django-kanban-budget = {editable = true,file = "file:///Users/jmcclure/Scripts/django-kanban-budget"}
+django-filter = "*"
+django-uuslug = "*"
+djangorestframework = "*"
+ipython = "==6.2.1"
+slacker = "*"
+Django = "*"
+Markdown = "*"
+PyGithub = "*"
+flake8 = "*"
+
+[requires]
+python_version = "3.6"
