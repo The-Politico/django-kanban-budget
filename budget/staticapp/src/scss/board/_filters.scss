@@ -61,6 +61,7 @@
       display: inline-block;
       padding: 2px 10px;
       width: calc(50% - 20px);
+      overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
 
