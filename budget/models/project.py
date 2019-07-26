@@ -1,8 +1,9 @@
 from budget.github import Github
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db import models
 from uuslug import uuslug
 
+User = get_user_model()
 
 class Project(models.Model):
     """Projects are kanban cards. The atomic unit of our workflow."""
