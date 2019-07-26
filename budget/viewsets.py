@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django_filters import rest_framework as filters
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
@@ -9,6 +9,7 @@ from .serializers import (BoardSerializer, ColumnSerializer, ProjectSerializer,
                           TagSerializer, TodoSerializer, TypeSerializer,
                           UserSerializer)
 
+User = get_user_model()
 
 class TokenAuthedViewSet(viewsets.ModelViewSet):
     """

@@ -1,11 +1,12 @@
 import operator
 
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from .models import Board, Column, Project, Tag, Todo, Type
 
+User = get_user_model()
 REPORTER_ATTR = getattr(settings, 'BUDGET_REPORTER_ATTR', 'is_staff')
 EDITOR_ATTR = getattr(settings, 'BUDGET_EDITOR_ATTR', 'is_staff')
 DEVELOPER_ATTR = getattr(settings, 'BUDGET_DEVELOPER_ATTR', 'is_superuser')
